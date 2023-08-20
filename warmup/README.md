@@ -82,5 +82,5 @@ Frequently Asked Questions
 Points Possible
 ===============
 
-You get full credit for matching the baseline accuracy (85%) and can get up to
+You get full credit (seven points) for matching the baseline accuracy (85%) and can get up to
 three points for improving significantly beyond that.
