@@ -109,9 +109,9 @@ Example
 Let's first test out the train function; you must run this before the eval
 function, because this establishes your tf-idf index.
 
-    python3 guesser.py --guesser_type=TfidfGuesser --question_source=gzjson
-    --questions=../data/qanta.guesstrain.json.gz --logging_file=guesser.log
-    --limit=10
+    python3 guesser.py --guesser_type=TfidfGuesser --question_source=gzjson \
+     --questions=../data/qanta.guesstrain.json.gz --logging_file=guesser.log \
+     --limit=10
     100%|█████████████████████████████████████████| 10/10 [00:00<00:00, 2743.89it/s]
     100%|███████████████████████████████████████| 10/10 [00:00<00:00, 441505.68it/s]
 
