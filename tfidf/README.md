@@ -109,9 +109,9 @@ Example
 Let's first test out the train function; you must run this before the eval
 function, because this establishes your tf-idf index.
 
-    python3 guesser.py --guesser_type=TfidfGuesser --question_source=gzjson
-    --questions=../data/qanta.guesstrain.json.gz --logging_file=guesser.log
-    --limit=10
+    python3 guesser.py --guesser_type=TfidfGuesser --question_source=gzjson \
+     --questions=../data/qanta.guesstrain.json.gz --logging_file=guesser.log \
+     --limit=10
     100%|█████████████████████████████████████████| 10/10 [00:00<00:00, 2743.89it/s]
     100%|███████████████████████████████████████| 10/10 [00:00<00:00, 441505.68it/s]
 
@@ -128,13 +128,15 @@ you've done that, you can now run the guesser.
 
 This is an example of how you can run the ```buzzer.py``` file on the ```qanta.guesstrain.json.gz``` file to generate the buzzer pickle files:
 ```
-python3 buzzer.py --guesser_type=TfidfGuesser --limit=50  --question_source=gzjson --TfidfGuesser_filename=models/TfidfGuesser  --questions=../data/qanta.guesstrain.json.gz --buzzer_guessers=TfidfGuesser
+python3 buzzer.py --guesser_type=TfidfGuesser --limit=50  --question_source=gzjson \
+ --TfidfGuesser_filename=models/TfidfGuesser  --questions=../data/qanta.guesstrain.json.gz \
+ --buzzer_guessers=TfidfGuesser
 ```
 
 This is an example of what your code (tfidf_guesser.py) output should look like:
 ```
 > python3 eval.py --evaluate=guesser --question_source=gzjson \
---questions=../data/qanta.guessdev.json.gz --limit=500
+--questions=../data/qanta.guessdev.json.gz --limit=500 
 
 hit 0.20
 ===================
