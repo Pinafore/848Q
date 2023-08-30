@@ -27,23 +27,23 @@ You'll turn in your code on Gradescope.
 What you have to do
 ----
 
-Coding (15 points in tfidf_guesser.py):
+Coding (in tfidf_guesser.py:
 
 1.  (Optional) Store necessary data in the constructor so you can do classification later.
 1.  You will need the pickle files generated from ``buzzer.py``. You can generate these files again using the ``qanta.guesstrain.json.gz`` file in the data directory.  
 1.  Modify the _train_ function so that the class stores what it needs to store to guess at what the answer is.
 1.  Modify the _call_ function so that it finds the closest indicies (in terms of *cosine* similarity) to the query.
 
-Coding (5 points in the logistic_buzzer.py):
+Coding (in logistic_buzzer.py):
 1.  Add some features to decide when to trust your answer.
 
-Analysis (5 points):
+Analysis (10 points):
 
 1.  What answers get confused with each other most easily?  What kinds of
     mistakes does this guesser make?
-1.  Compute recall as you increase the number of guesses.
+1.  Where does your buzzer make mistakes?  How might you further improve the buzzer?
 
-Accuracy (10 points): How well you do on the leaderboard.
+Accuracy (20 points): How well you do on the leaderboard: 10 for the buzzer, 10 for the guesser.
 
 What you don't have to do
 -------
@@ -484,6 +484,13 @@ close 0.12
 =================
 ```
 
+Leaderboard
+-
+
+Like most of our homeworks, this will be graded mostly automatically.  There will be separate leaderboards for the buzzer and the guesser.  (We're doing this to make sure that it doesn't time out.)
+
+We will not retrain your models, so make sure that you upload all of the information necessary for your models to run (try running eval.py in a fresh clone of the repo to make sure it can run).  
+
 Hints
 -
 
@@ -520,4 +527,6 @@ Hints
     is applied to the words, what data are included, or looking at
     n-grams.  Also don't forget
     about the wiki pages:
-    https://drive.google.com/file/d/1-AhjvqsoZ01gz7EMt5VmlCnVpsE96A5n/view?usp=share_link 
+    https://drive.google.com/file/d/1-AhjvqsoZ01gz7EMt5VmlCnVpsE96A5n/view?usp=share_link
+10. The buzzer depends on the guesser.  So make sure the guesser is working well before spending too much time on the buzzer.
+11. The simplest buzzer is a threshold: buzz if the guesser score is over X.  So think about how you'd implement that with the logistic regression classifier.
