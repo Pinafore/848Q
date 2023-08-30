@@ -75,14 +75,12 @@ you should present. Here are some ideas of people whose work is worth
 looking at (but many do more than just QA):
 
   * [Eric Wallace](https://scholar.google.com/citations?user=SgST3LkAAAAJ)
-  *
-  [Johnathan Berant](https://www.cs.tau.ac.il/~joberant/publications.html)
-  *
-  [Hannaneh Hajishirzi](https://homes.cs.washington.edu/~hannaneh/research.html)
+  * [Johnathan Berant](https://www.cs.tau.ac.il/~joberant/publications.html)
+  * [Hannaneh Hajishirzi](https://homes.cs.washington.edu/~hannaneh/research.html)
   * [Anna Rogers](https://annargrs.github.io/)
   * [Pontus Stenetorp](https://pontus.stenetorp.se/publications.html)
   * [Tongshuang Wu](https://www.cs.cmu.edu/~sherryw/group.html#publications)
-  [Isabelle Augenstein](https://isabelleaugenstein.github.io/publications.html)
+  * [Isabelle Augenstein](https://isabelleaugenstein.github.io/publications.html)
   * [Eunsol Choi](https://eunsol.github.io/#publications)
   * [Danqi Chen](https://www.cs.princeton.edu/~danqic/papers.html)
   * [Chris Manning](https://nlp.stanford.edu/~manning/papers/)
@@ -97,7 +95,9 @@ Note: To prevent over-sampling top institutions, I limited myself to
 picking one person at a particular university.
 
 Please think about your paper far enough in advance so that you can
-ask if it's a good paper to talk about.
+ask if it's a good paper to talk about.  Record your signup
+[here](https://docs.google.com/spreadsheets/d/1gJckfe7zK0a3-HJ0xJKGuYegPErUkU5t5o2WcQoAu0g/edit?usp=sharing).
+But note that we're not allowing duplicate papers.
 
 What to Cover
 ================
