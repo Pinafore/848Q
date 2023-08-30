@@ -70,5 +70,12 @@ three leaderboards.  One where you just upload your predictions, one
 where we run your code on a small number of predictions, and one where
 we run your code on a larger test set.
 
+Grading
+=======
+
+30 points are available for satisfying the spirit of the assignment,
+explaining what you did, and documenting the code well enough for the
+TA to understand what's going on.
+
 Obviously, it's best if you can do all the leaderboards!  But you are
 only required to do it on the "upload predictions" leaderboard.
