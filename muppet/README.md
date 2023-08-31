@@ -58,8 +58,8 @@ Here are some things you could do and would be worth full credit:
  * Using a Muppet Model as a generative LM guesser.  You could use APIs for
    this, which should be pretty easy (we have [cached GPT3
    guesses](https://github.com/Pinafore/848Q/blob/main/models/gpt_cache.tar.gz)
-   and (a guesser that uses those
-   guesses)[https://github.com/Pinafore/848Q/blob/main/muppet/gpr_guesser.py]
+   and [a guesser that uses those
+   guesses](https://github.com/Pinafore/848Q/blob/main/muppet/gpr_guesser.py)
    if you want to train a downstream buzzer on that).  The *hard mode* version
    of this would be to use DPO to make it work better specifically on this
    dataset.
