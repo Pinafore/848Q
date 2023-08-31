@@ -30,7 +30,6 @@ What you have to do
 Coding (in tfidf_guesser.py:
 
 1.  (Optional) Store necessary data in the constructor so you can do classification later.
-1.  You will need the pickle files generated from ``buzzer.py``. You can generate these files again using the ``qanta.guesstrain.json.gz`` file in the data directory.  
 1.  Modify the _train_ function so that the class stores what it needs to store to guess at what the answer is.
 1.  Modify the _call_ function so that it finds the closest indicies (in terms of *cosine* similarity) to the query.
 
@@ -48,12 +47,11 @@ Accuracy (20 points): How well you do on the leaderboard: 10 for the buzzer, 10 
 What you don't have to do
 -------
 
-You don't have to (and shouldn't!) compute tf-idf yourself.  We did that in
-a previous homework, so you can leave that to the professionals.  We encourage
-you to use the tf-idf vectorizer from sklearn: play around with different settings of the
-paramters.  You probably shouldn't modify it, but it's probably useful to
-understand it for future homeworks (you'll need to write/call code like it in
-the future).
+You don't have to (and shouldn't!) compute tf-idf yourself, so you can leave
+that to the professionals.  We encourage you to use the tf-idf vectorizer from
+sklearn: play around with different settings of the paramters.  You probably
+shouldn't modify it, but it's probably useful to understand it for future
+homeworks (you'll need to write/call code like it in the future).
 
 You also don't have to save the vectorizer and tfidf representations, we'll do
 that for you.  Take a look at the base guesser class, it needs to track the
@@ -84,9 +82,8 @@ What to turn in
 -
 
 1.  Submit your _tfidf_guesser.py_ file and _logistic_guesser.py_ file.
-2.  If you create new features (or reuse features from the feature engineering
-homework), also upload your _params.py_ and _features.py_ files.
-3. Submit the ``LogisticBuzzer.featurizer.pkl``, ``LogisticBuzzer.model.pkl``, ``TfidfGuesser.answers.pkl``, ``TfidfGuesser.questions.pkl``, ``TfidfGuesser.tfidf.pkl`` and the ``TfidfGuesser.vectorizer.pkl`` files. 
+2.  For the buzzer, also upload your _params.py_ and _features.py_ files if you modify them.
+3.  Submit the ``LogisticBuzzer.featurizer.pkl``, ``LogisticBuzzer.model.pkl``, ``TfidfGuesser.answers.pkl``, ``TfidfGuesser.questions.pkl``, ``TfidfGuesser.tfidf.pkl`` and the ``TfidfGuesser.vectorizer.pkl`` files. 
 4.  Submit your _analysis.pdf_ file (no more than one page; pictures
     are better than text)
 
@@ -487,9 +484,13 @@ close 0.12
 Leaderboard
 -
 
-Like most of our homeworks, this will be graded mostly automatically.  There will be separate leaderboards for the buzzer and the guesser.  (We're doing this to make sure that it doesn't time out.)
+Like most of our homeworks, this will be graded mostly automatically.  There
+will be separate leaderboards for the buzzer and the guesser.  (We're doing
+this to make sure that it doesn't time out.)
 
-We will not retrain your models, so make sure that you upload all of the information necessary for your models to run (try running eval.py in a fresh clone of the repo to make sure it can run).  
+We will not retrain your models, so make sure that you upload all of the
+information necessary for your models to run (try running eval.py in a fresh
+clone of the repo to make sure it can run).
 
 Hints
 -
