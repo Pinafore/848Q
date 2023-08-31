@@ -27,7 +27,7 @@ Python libraries that you should be using.
 How do I know if my code is working?
 ====================================
 
-Run `python test.py` on the command line and fix any tests are failing.  While
+Run `python president_test.py` on the command line and fix any tests are failing.  While
 this is a neccessary condition to getting full credit on the assignment, it is
 not sufficient.
 
