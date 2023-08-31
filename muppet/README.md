@@ -1,10 +1,10 @@
 
 Muppet Models
--------------
+=============
 
 
 Getting things to Work
-======================
+----------------------
 
 While you will have access to Nexus resources for *training*, at
 *test* time you're still going to need to run the code on CPU-only
@@ -21,7 +21,7 @@ the simplest approach that could work, test the hypothesis, and get
 results.  This will hopefully serve you well for your project.
 
 Ideas
-=====
+-----
 
 Like the last assignment, this is open-ended.  You can do anything
 that uses large language models.  Okay, the first question is "what's
@@ -65,7 +65,7 @@ Here are some things you could do and would be worth full credit:
    dataset.
 
 Leaderboards
-============
+------------
 
 Because this is more computationally expensive, we are going to have
 three leaderboards.  One where you just upload your predictions, one
@@ -73,7 +73,7 @@ where we run your code on a small number of predictions, and one where
 we run your code on a larger test set.
 
 Grading
-=======
+-------
 
 30 points are available for satisfying the spirit of the assignment,
 explaining what you did, and documenting the code well enough for the
