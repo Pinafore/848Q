@@ -84,5 +84,5 @@ if __name__ == "__main__":
     
     for date in ["Who was president on Wed Jan 25 06:20:00 2023?",
                      "Who was president on Sat May 23 02:00:00 1982?"]:
-        print(date, pg(date)["guess"])
+        print(date, pg(date)[0]["guess"])
         

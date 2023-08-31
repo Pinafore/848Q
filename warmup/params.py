@@ -11,7 +11,7 @@ import gzip
 
 from pandas import read_csv
 
-from write_expo import ExpoQuestions #sol
+# from write_expo import ExpoQuestions #sol
 
 def add_general_params(parser):
     parser.add_argument('--no_cuda', action='store_true')

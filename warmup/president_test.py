@@ -19,7 +19,7 @@ class TestPresidentGuessers(unittest.TestCase):
 
     def test_basic(self):
         for ii in self.reference:
-            guess = self.pg(ii)["guess"]
+            guess = self.pg(ii)[0]["guess"]
             self.assertTrue(guess in self.reference[ii])
 
 if __name__ == '__main__':
