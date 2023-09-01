@@ -80,13 +80,13 @@ class Guesser:
         if split_by_sentence:
             for qq in tqdm(training_data):
                 for ss in sent_tokenize(qq["text"]):
-                    if (min_length < 0 or len(ss) > min_length) and
+                    if (min_length < 0 or len(ss) > min_length) and \
                         (max_length < 0 or len(ss) < max_length):
                         answers_to_questions[qq[answer_field]].add(ss)
         else:
             for qq in tqdm(training_data):
                 text = qq["text"]
-                if (min_length < 0 or len(text) > min_length) and
+                if (min_length < 0 or len(text) > min_length) and \
                     (max_length < 0 or len(text) < max_length):
                     answers_to_questions[qq[answer_field]].add(qq["text"])
         return answers_to_questions
