@@ -50,6 +50,9 @@ quickly and that you can get answers from.  So you need to think about
 the simplest approach that could work, test the hypothesis, and get
 results.  This will hopefully serve you well for your project.
 
+We encourage you to use other code as much as possible.  Don't try to
+reinvent the wheel.  The goal is to get things to work on these data!
+
 Suggestions
 ===========
 
