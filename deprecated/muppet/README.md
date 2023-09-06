@@ -77,7 +77,7 @@ Grading
 
 30 points are available for satisfying the spirit of the assignment,
 explaining what you did, and documenting the code well enough for the
-TA to understand what's going on.
+TA to understand what's going on.es
 
 Obviously, it's best if you can do all the leaderboards!  But you are
 only required to do it on the "upload predictions" leaderboard.

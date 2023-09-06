@@ -89,3 +89,15 @@ TA to understand what's going on.
 
 10 additional bonus points are available for doing particularly well on the
 leaderboard or for being particularly clever.
+
+
+Example
+-------
+
+Here I'm going to walk through creating a new feature that looks at
+the `guess_history`.
+
+First, let's add the feature (to `features.py`) and try it out on a
+tiny example to make sure that it works:
+
+    python3 buzzer.py --limit=10 --questions=data/qanta.buzztrain.json.gz --num_guesses=10 --buzzer_history_length=5 --buzzer_history_depth=3 --features Length PreviousGuess
