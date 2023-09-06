@@ -116,10 +116,9 @@ where it's easier to "share the burden".
 What you Have to Upload
 =======================
 
-Upload code that runs on the autograder (e.g., if you train a model,
-include a pickle file / model file so that it can be run directly).
-Again, Gradescope has a maximum upload size as well, so your model
-should be less than 200MB.
+Upload code (even if it doesn't run on the autograder).  However, it
+should run on the autograder given infinite time (we want to be able
+to easily run it offline).
 
 Also upload a writeup explaining what you did (with citations as
 appropriate).  The writeup should be comprehensive enough that the TA
@@ -129,7 +128,7 @@ the things you try simple).
 Grading
 =======
 
-30 points are available for satisfying the spirit of the assignment,
+40 points are available for satisfying the spirit of the assignment,
 explaining what you did, and documenting the code well enough for the
 TA to understand what's going on.
 
