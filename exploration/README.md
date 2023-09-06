@@ -15,7 +15,8 @@ There are two requirements on the substance of what you must turn in:
 
  1. Make an improvement to the guesser that uses representation
  learning in some way.  This must be a subclass of the generic
- "Guesser" class that respects the underlying API.
+ "Guesser" class that respects the underlying API.  This could be a
+ Muppet model or something simpler.
 
  2. Make an improvement to the buzzer that uses sequence modeling in
  some way.  This must be a subclass of the generic "Buzzer" class that
@@ -29,10 +30,8 @@ things that are too computationally expensive won't work.
 What You're Not Allowed to Do
 =============================
 
-  1.  Do anything that is so complicated that it cannot run on
-      GradeScope (this rules out most Muppet Models).
-  2.  Break the underlying API (otherwise, you can't be on the leaderboad)
-  3.  Use QANTA test data in training your code.
+  1.  Break the underlying API (otherwise, you can't be on the leaderboad)
+  2.  Use QANTA test data in training your code.
 
 Getting things to Work
 ===============
@@ -72,6 +71,7 @@ For sequence learning:
   additional guess).
   3.  Parse the questions and use that information to improve the
   guesser or buzzer.
+  4.  Change the buzzer to user the guess history and feed it into a model like [crf-suite](https://pypi.org/project/python-crfsuite/).
 
 For Muppet models:
 
