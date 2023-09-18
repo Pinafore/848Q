@@ -90,7 +90,7 @@ Grade
 
 The grade will be out of 25 points, broken into five areas:
 
-* _Presentation_: For your oral presentation, do you highlight what
+* _Presentation_: For your poster presentation, do you highlight what
   you did and make people care?  Did you use time well during the
   presentation?
 
