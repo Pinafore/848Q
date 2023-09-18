@@ -71,7 +71,7 @@ clearly discuss all of the experiments you will run.
 
 Revision + Plots
 =========================
-For this deliverable, 
+For this deliverable, you now need to have results and present them well.
 
 Poster Session
 ======================
