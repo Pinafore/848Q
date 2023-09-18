@@ -1,33 +1,30 @@
 Subject
 ==================
 
-You may either enter a shared project on 
-[question answering](qa.md), a shared project on [social media](https://github.com/Pinafore/cl1-hw/blob/master/project/sw_project.pdf), or
-choose a project of your own.
+You'll be working on a project that is somehow related to question
+answering.  This is very open-ended.  I have some ideas for possible
+projects [here](https://docs.google.com/document/d/10PbaxRJ3PpU37vSOWbvP7y4cIjX1p2m2yIwC_cYIqOg/edit?usp=sharing). 
 
-If you choose to work on a project of your own choosing, it must:
-* Have readily available data
-* Be of general interest (there should be published guidelines for what constitutes "standard" performance) and should be a problem worth tackling
-* Be of specific interest to computational linguistics: there should be clear and obvious application of the techniques we have used in the course
-* Have a baseline that you can implement (or run yourself) easily within a week
+You do not need to implement a new research idea.  It's also possible
+to:
+* Replicate existing research
+* Conduct a thorough literature review
 
-If you choose to work on a project of your own choosing, you will be
-held to a higher standard.  You must clearly document baselines and
-show improvement over those baselines.  You'll also need to convince
-us to make sure you clearly convey why it's an interesting problem.
+However, the goal is for this to be a well-written, publishable piece
+of scholarship.  The writing expectations will be higher if there's
+less original research.
 
 Groups
 ==================
 
-You must form a group of 4-6 students enrolled in this course.  If you have a project idea and you're not able to convince two other people to work on it, it's probably not that interesting.  You should instead join another group.  
+You must form a group of 2-4 students enrolled in this course.  If you have a project idea and you're not able to convince two other people to work on it, it's probably not that interesting.  You should instead join another group.  
 
 Proposal
 ==================
 
-The project proposal can be turned in 13. March or 24. March (we're giving two due dates because some people are raring to get started with the project and want to run ideas by us ASAP and other people need more time).  This one page PDF document
-should describe:
+The project proposal is a one page PDF document that should describe:
 
-* What project you're working on.  If you're not doing the shared competition, you must describe the task, data, and baselines clearly.
+* What is the goal of the project and how you'll know if it worked
 
 * Who is on your team
 
@@ -36,79 +33,57 @@ should describe:
 * Your timeline for completing the project (be realistic; you should
   have your first results by the first deliverable deadline)
 
-Have the person in your group whose name is alphabetically first
-submit your assignment on Piazza (we're doing this on Piazza so that people can see projects and see if there are potential synergies / best practice that can be shared).  Late days cannot be used on this
-assignment.  (We'll create a thread for this you can add to as a followup.)
+Submit this (and all other deliverables) to Gradescope using the team functionality.
 
-First Deliverable
+Intro and Related Work
 ======================
 
-Your first deliverable is due 16. April.  This is a one page writeup detailing what you've done thus far.  It should prove that your project idea is sound and that you've made progress.  Good indications of this are:
+This first deliverable should be written like the first sections of a
+conference paper.  It should:
+
+* Explain why what you're doing is important and relevant
+* Talk about the contributions you will make (it's okay to be
+optimistic here)
+* Sketch out the strategy that you'll take in the rest of the
+research.
+
+This obviously has a lot over overlap with the proposal, but the ideas
+should be clearer, this should be more clearly written, and it should
+include appropriate citations for related work.
+
+Baselines
+=========================
+
+Throughout the semester, we'll be adding more sections to the paper.
+But this might be more of a subsection.  However, it requires more
+work!
+
+You'll need to: 
 * You have your data
-* You've implemented baseline techniques that work
-* You've made some progress on the overall goal of your project
+* You've implemented/run baseline techniques that work
 
-Post your first deliverable report publicly on Piazza.
+Draft / Experiment Plan
+========================
 
-Final Presentation
+This deliverable should be a nearly complete draft of the paper except
+for the experimental results section.  However, make sure that you
+clearly discuss all of the experiments you will run.
+
+Revision + Plots
+=========================
+For this deliverable, 
+
+Poster Session
 ======================
 
-The final presentation will be an eight minute video.  In the final presentation you will:
-
-* Explain what you did
-
-* Who did what
-
-* What challenges you had
-
-* Review how well you did 
-
-* Provide an error analysis or otherwise do a qualitative examination of your data.  For example, in a traditional supervised setup, this would contain examples from the
-  development set that you get wrong.  You should show those sentences
-  and explain why (in terms of features or the model) they have the
-  wrong answer.  You should have been doing this all along, but this is your final inspection of
-  your errors. The features or model problems you discover should not
-  be trivial features you could add easily.  Instead, these should be
-  features or models that are difficult to correct.  An error analysis
-  is not the same thing as simply presenting the error matrix, as it
-  does not inspect any individual examples.
-
-* The linguistic motivation for your features.  This is a
-  computational linguistics class, so you should give precedence to
-  features / techniques that we use in this class (e.g., syntax,
-  morphology, part of speech, word sense, etc.).  Given two features
-  that work equally well and one that is linguistically motivated,
-  we'll prefer the linguistically motivated one.
-
-* Presumably you did many different things; how did they each
-  individually contribute to your final result?
-
-It is okay to go under time, but
-_do not_ go over time.  It will negatively impact your grade. 
-
-We'll treat this as a flipped classroom session (as usual).  You'll post your videos by May 9, we'll watch them before the last class, and then we'll ask questions.
+We'll have a poster session for students to see everyone's work and
+give feedback.
 
 Project Writeup
 ======================
 
-By 10:00 13. May (the final exam time as set by the registrar), have the person in your group whose last name
-is alphabetically last submit their project writeup explaining what
-you did and what results you achieved on GradeScope.  This document should
-make it clear:
-
-* Why this is a good idea
-* What you did
-* Who did what
-* Whether your technique worked or not
-
-Please do not go over 2500 words unless you have a really good reason.
-Images are a much better use of space than words, usually (there's no
-limit on including images, but use judgement and be selective).
-
-I'd suggest that you use either the ACL or ICML template:
-* https://icml.cc/Conferences/2018/StyleAuthorInstructions
-* https://acl2018.org/downloads/acl18-latex.zip
-
+Taking into account all of the feedback you've gotten, revise your
+paper and submit it for the last time!
 
 Grade
 ======================
