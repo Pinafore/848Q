@@ -17,7 +17,10 @@ less original research.
 Groups
 ==================
 
-You must form a group of 2-4 students enrolled in this course.  If you have a project idea and you're not able to convince two other people to work on it, it's probably not that interesting.  You should instead join another group.  
+You must form a group of 2-4 students enrolled in this course.  If you
+have a project idea and you're not able to convince other people to
+work on it, it's probably not that interesting.  You should instead
+join another group.
 
 Proposal
 ==================
@@ -31,9 +34,12 @@ The project proposal is a one page PDF document that should describe:
 * What techniques you will explore 
 
 * Your timeline for completing the project (be realistic; you should
-  have your first results by the first deliverable deadline)
+  have your first baseline results in a few weeks and then project
+  results in about a month: it's better to underpromise and
+  overdeliver than the reverse)
 
-Submit this (and all other deliverables) to Gradescope using the team functionality.
+Submit this (and all other deliverables) to Gradescope using the team
+functionality.
 
 Intro and Related Work
 ======================
@@ -46,10 +52,15 @@ conference paper.  It should:
 optimistic here)
 * Sketch out the strategy that you'll take in the rest of the
 research.
+* Review relevant related work.
 
 This obviously has a lot over overlap with the proposal, but the ideas
-should be clearer, this should be more clearly written, and it should
-include appropriate citations for related work.
+should be clearer, this should be more clearly written, it should not
+assume too much information that we've covered in the course, and it
+should include appropriate citations for related work.
+
+If your ideas have changed considerably since the proposal, obviously
+rewrite that information.
 
 Baselines
 =========================
