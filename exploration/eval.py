@@ -19,7 +19,7 @@ kLABELS = {"best": "Guess was correct, Buzz was correct",
            "aggressive": "Guess was wrong, Buzz was wrong",
            "waiting": "Guess was wrong, Buzz was correct"}
 
-def eval_retrieval(guesser, questions, n_guesses=25, cutoff=-1):
+def eval_retrieval(guesser, questions, n_guesses=25, cutoff=-1, dump_guesses=True):
     """
     Evaluate the guesser's retrieval
     """
@@ -37,6 +37,10 @@ def eval_retrieval(guesser, questions, n_guesses=25, cutoff=-1):
         question_text.append(text)
 
     all_guesses = guesser.batch_guess(question_text, n_guesses)
+    if dump_guesses:
+        pickle.dump(all_guesses, open('models/guesser_predict.pkl', 'wb'))
+
+    
     assert len(all_guesses) == len(question_text)
     for question, guesses, text in zip(questions, all_guesses, question_text):
         if len(guesses) > n_guesses:
@@ -88,7 +92,7 @@ def pretty_feature_print(features, first_features=["guess", "answer", "id"]):
     return "\n".join(lines)
 
 
-def eval_buzzer(buzzer, questions):
+def eval_buzzer(buzzer, questions, dump_buzze_predictions=True):
     """
     Compute buzzer outcomes on a dataset
     """
@@ -100,10 +104,13 @@ def eval_buzzer(buzzer, questions):
     buzzer.build_features()
     
     predict, feature_matrix, feature_dict, correct, metadata = buzzer.predict(questions)
+    if dump_buzze_predictions:
+        pickle.dump([predict, feature_matrix, feature_dict, correct, metadata], 
+                                    open('models/buzzer_predict.pkl', 'wb'))
 
     # Keep track of how much of the question you needed to see before
     # answering correctly
-    question_unseen = {}
+    question_seen = {}
     question_length = defaultdict(int)
     
     outcomes = Counter()
@@ -123,8 +130,8 @@ def eval_buzzer(buzzer, questions):
                 outcomes["best"] += 1
                 examples["best"].append(features)
 
-                if not qid in question_unseen:
-                    question_unseen[qid] = len(meta["text"])
+                if not qid in question_seen:
+                    question_seen[qid] = len(meta["text"])
             else:
                 outcomes["timid"] += 1
                 examples["timid"].append(features)
@@ -133,17 +140,23 @@ def eval_buzzer(buzzer, questions):
                 outcomes["aggressive"] += 1
                 examples["aggressive"].append(features)
 
-                if not qid in question_unseen:
-                    question_unseen[qid] = -len(meta["text"])
+                if not qid in question_seen:
+                    question_seen[qid] = -len(meta["text"])
             else:
                 outcomes["waiting"] += 1
                 examples["waiting"].append(features)
     unseen_characters = 0.0
+    number_questions = 0
     for question in question_length:
+        number_questions += 1
         length = question_length[question]
-        unseen_characters += (length - question_unseen[question]) / length
-    return outcomes, examples, unseen_characters
-                
+        if question in question_seen:
+            if question_seen[question] > 0:
+                # The guess was correct
+                unseen_characters += 1.0 - question_seen[question] / length
+            else:
+                unseen_characters -= 1.0 + question_seen[question] / length
+    return outcomes, examples, unseen_characters / number_questions
 
 if __name__ == "__main__":
     # Load model and evaluate it
