@@ -73,12 +73,18 @@ You'll need to:
 * You have your data
 * You've implemented/run baseline techniques that work
 
+This doesn't mean that you need to have your entire experiment plan worked out, but you can include anything that's relevant.  At the bare minimum, for experimental papers you should have the task that you're doing solidified enough to have a one dataset/setting picked out and a model to compare against that you've run on that data.
+
+For a survey/position paper, this should be a complete outline of all the points you want to make even if all sections aren't completely fleshed out.
+
 Draft / Experiment Plan
 ========================
 
 This deliverable should be a nearly complete draft of the paper except
 for the experimental results section.  However, make sure that you
 clearly discuss all of the experiments you will run.
+
+For survey position papers, this should be a complete draft.
 
 Revision + Plots
 =========================
