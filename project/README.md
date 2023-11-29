@@ -90,11 +90,10 @@ Revision + Plots
 =========================
 For this deliverable, you now need to have results and present them well.
 
-Poster Session
+Presentation
 ======================
 
-We'll have a poster session for students to see everyone's work and
-give feedback.
+During the final class period, you'll present your project progress thus far for five minutes (strictly enforced), followed by five minutes of questions / discussion.
 
 Project Writeup
 ======================
