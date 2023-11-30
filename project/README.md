@@ -88,7 +88,10 @@ For survey position papers, this should be a complete draft.
 
 Revision + Plots
 =========================
-For this deliverable, you now need to have results and present them well.
+For this deliverable, you now need to have results and present them well.  Make sure to:
+* Have all sections of the paper, incorporating the comments from previous revisions
+* Present the results well.  Even if you don't have all of the results in, present the ones you have as well as possible.
+* Update all sections to make sure that they reflect the current state of the work (i.e., the introduction is probably going to need to be updated)
 
 Presentation
 ======================
@@ -98,7 +101,7 @@ During the final class period, you'll present your project progress thus far for
 Project Writeup
 ======================
 
-Taking into account all of the feedback you've gotten, revise your
+Taking into account all of the feedback you've gotten (including the presentation), revise your
 paper and submit it for the last time!
 
 Grade
