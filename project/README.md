@@ -96,7 +96,20 @@ For this deliverable, you now need to have results and present them well.  Make 
 Presentation
 ======================
 
-During the final class period, you'll present your project progress thus far for five minutes (strictly enforced), followed by five minutes of questions / discussion.
+During the final class period, you'll present your project progress
+thus far for five minutes (strictly enforced), followed by five
+minutes of questions / discussion.  There's no fixed pre-specified
+format for the presentation, but you should:
+* talk about what you're doing;  
+* the success that you've had thus far; and
+* discuss problem(s) so you can get advice on them.  
+Be efficient: five minutes is fast, and we'll be strict on time.
+Don't bother reviewing things that the class already knows.  You don't
+need to explain what MultiHop, Quizbowl, GPT, etc. are.
+
+We'll have a Piazza post where you can put a link to your presentation
+so it can be presented on the classroom computer.  This way people
+won't have to connect their computer to the screen.
 
 Project Writeup
 ======================
