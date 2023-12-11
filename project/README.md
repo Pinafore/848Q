@@ -107,6 +107,13 @@ Be efficient: five minutes is fast, and we'll be strict on time.
 Don't bother reviewing things that the class already knows.  You don't
 need to explain what MultiHop, Quizbowl, GPT, etc. are.
 
+Really, this presentation is for *you*.  Present the sorts of things
+you want to get feedback on and discuss what you think is important at
+this point.  If you're done with the project, showcase your results.
+If you're stuck, talk about what you've tried and where you're still
+having problems.  If you have results but don't know what to make of
+them, talk about that.
+
 We'll have a Piazza post where you can put a link to your presentation
 so it can be presented on the classroom computer.  This way people
 won't have to connect their computer to the screen.
