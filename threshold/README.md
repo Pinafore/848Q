@@ -13,8 +13,7 @@ extra credit.
 What you have to do
 ===================
 
-The TfIdf takes a question and returns a guess of who the president
-was.  You need to extract what time the question is asking about and return
+The TfIdf takes a question and returns a guess of what the answer is.  You need to extract what the question is asking about and return
 a promising answer.  You should use sklearn's tf-idf retrieval; this should be straightforward.  The code for processing the data is provided, you should understand it but not modify it.
 
 The problem is when to trust that answer.  The `ThresholdBuzzer` class decides when to trust that answer.  Inspect the output of your guesser class and try to find a good value for the two parameters that control when to buzz in: how much of the question needs to be revealed before it trusts the answer and how high the score of the buzzer needs to be before it answers.
