@@ -121,61 +121,6 @@ class TfidfGuesser(Guesser):
             guesses.append(guess)
         assert len(guesses) <= max_n_guesses, "Too many guesses: %i > %i" % (len(guesses), max_n_guesses)
         return guesses
-
-    def batch_guess(self, questions:Iterable[str], max_n_guesses:int, block_size:int=1024) -> Iterable[Dict[str, Union[str, float]]]:
-        """
-        The batch_guess function allows you to find the search
-        results for multiple questions at once.  This is more efficient
-        than running the retriever for each question, finding the
-        largest elements, and returning them individually.  
-
-        To understand why, remember that the similarity operation for an
-        individual query and the corpus is a dot product, but if we do
-        this as a big matrix, we can fit all of the documents at once
-        and then compute the matrix as a parallelizable matrix
-        multiplication.
-
-        The most complicated part is sorting the resulting similarities,
-        which is a good use of the argpartition function from numpy.
-
-        Args:
-           questions: the questions we'll produce answers for
-           max_n_guesses: number of guesses to return
-           block_size: split large lists of questions into arrays of this many rows
-        Returns:
-        """
-
-        # IMPORTANT NOTE FOR HOMEWORK: you do not need to complete
-        # batch_guess.  If you're having trouble with this, just
-        # delete the function, and the parent class will emulate the
-        # functionality one row at a time.
-        
-        from math import floor
-    
-        all_guesses = []
-
-        logging.info("Querying matrix of size %i with block size %i" %
-                     (len(questions), block_size))
-
-        # The next line of code is bogus, this needs to be fixed
-        # to give you a real answer.
-        top_hits = np.array([list(range(max_n_guesses-1, -1, -1))]*block_size)
-        for start in tqdm(range(0, len(questions), block_size)):
-            stop = start+block_size
-            block = questions[start:stop]
-            logging.info("Block %i to %i (%i elements)" % (start, stop, len(block)))
-            
-            
-
-            for question in range(len(block)):
-                guesses = []
-                for idx in list(top_hits[question]):
-                    score = 0.0
-                    guesses.append({"guess": self.answers[idx], "confidence": score, "question": self.questions[idx]})
-                all_guesses.append(guesses)
-
-        assert len(all_guesses) == len(questions), "Guesses (%i) != questions (%i)" % (len(all_guesses), len(questions))
-        return all_guesses
     
     def load(self):
         """
