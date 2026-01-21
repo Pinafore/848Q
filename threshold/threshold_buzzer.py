@@ -75,8 +75,7 @@ class ThresholdBuzzer(Buzzer):
         Returns:
             True if the system should buzz, False otherwise.
         """
-        if length_threshold < 0 or length_threshold < len(question):
-            return confidence > confidence_threshold
+        # HW TODO: check the two conditions then return True/False
         return False
 
     def set_confidence_feature(self, feat_vec: Iterable[str]) -> None:
@@ -181,7 +180,7 @@ class ThresholdBuzzer(Buzzer):
 
         predictions: List[int] = []
 
-        # TODO: threshold_feature is referenced inconsistently here
+        # JBG's TODO: threshold_feature is referenced inconsistently here
         self.set_confidence_feature(self._features[0].keys())
         assert self.threshold_feature is not None
 
