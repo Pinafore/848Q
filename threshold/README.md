@@ -13,10 +13,14 @@ extra credit.
 What you have to do
 ===================
 
-The TfIdf takes a question and returns a guess of what the answer is.  You need to extract what the question is asking about and return
-a promising answer.  You should use sklearn's tf-idf retrieval; this should be straightforward.  The code for processing the data is provided, you should understand it but not modify it.
+The `TfidfGuesser` class takes a question and returns a guess of what the answer is.  You need to extract what the question is asking about and return a promising answer.  You should use sklearn's tf-idf retrieval (inside `__init__` function); this should be straightforward. The code for processing the data is provided, you should understand it but not modify it. You also have to fix `__call__` function, we already computed cosine similarity for you, you just to return the top guesses accordingly. 
 
-The problem is when to trust that answer.  The `ThresholdBuzzer` class decides when to trust that answer.  Inspect the output of your guesser class and try to find a good value for the two parameters that control when to buzz in: how much of the question needs to be revealed before it trusts the answer and how high the score of the buzzer needs to be before it answers.
+The problem is when to trust that answer.  The `ThresholdBuzzer` class decides **when** to trust that answer. You will need to implement `threshold_predict` function, then, inspect the output of your guesser class and try to find a good value for the two parameters that control when to buzz in: how much of the question needs to be revealed before it trusts the answer (`cutoff`) and how high the score of the buzzer needs to be before it answers (`threshold`). 
+
+In summary, you will have to make changes to:
+1. `__init__` and `__call__` in `tfidf_guesser.py`
+2. `threshold_predict` in `threshold_buzzer.py`
+3. find threshold and cutoff parameters that gives good accuracy 
 
 This should be very simple, no more than five lines of code.  If you're
 writing far more than that, you're likely not taking advantage of built-in
