@@ -78,7 +78,7 @@ class TfidfGuesser(Guesser):
         Guesser.train(self, training_data, answer_field, split_by_sentence, min_length,
                       max_length, remove_missing_pages)
 
-        self.tfidf = self.tfidf_vectorizer.transform(self.questions)
+        self.tfidf = self.tfidf_vectorizer.fit_transform(self.questions)
         logging.info("Creating tf-idf dataframe with %i" % len(self.questions))
         
     def save(self):
