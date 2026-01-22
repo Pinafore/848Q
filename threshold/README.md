@@ -450,7 +450,10 @@ Again, don't focus too much on the accuracy.  Looks at examples of where mistake
 How to turn it in
 =================
 
-Modify the two files `threshold_buzzer.py` and `tfidf_guesser.py` and upload them HW0 on Gradescope.
+Modify the two files `threshold_buzzer.py` and `tfidf_guesser.py` and upload followings to HW0: warmup on Gradescope.
+1. `threshold_buzzer.py`
+2. `tfidf_guesser.py`
+3. all Tfidf saved models: `TfidfGuesser.questions.pkl`, `TfidfGuesser.answers.pkl`, `TfidfGuesser.tfidf.pkl` and `TfidfGuesser.vectorizer.pkl`
 
 Extra Credit
 ============
