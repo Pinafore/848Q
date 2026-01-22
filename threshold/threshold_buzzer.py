@@ -114,6 +114,11 @@ class ThresholdBuzzer(Buzzer):
             pickle.dump((self.threshold, self.cutoff), outfile)
 
     def train(self, questions: Iterable[str]) -> None:
+        """
+        Train the threshold buzzer parameters. Hint: You may want to
+        train with data/qanta.buzztrain.json.gz to find best threshold and length cutoff.
+        """
+
         assert len(self._features) == len(self._questions), "Features not built.  Did you run build_features?"
         self.set_confidence_feature(self)
 
