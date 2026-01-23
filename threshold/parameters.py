@@ -28,13 +28,9 @@ def add_question_params(parser):
     parser.add_argument('--expo_output_root', default="expo/expo", type=str) 
 
 def add_buzzer_params(parser):
-    from logistic_buzzer import LogisticParameters
-    from lorabert_buzzer import LoraBertParameters
     from threshold_buzzer import ThresholdParameters
     
     params = {}
-    params["logistic"] = LogisticParameters()
-    params["lorabert"] = LoraBertParameters()
     params["threshold"] = ThresholdParameters()
 
     for ii in params:
@@ -202,13 +198,6 @@ def load_buzzer(flags, guesser_params, load=False):
     
     print("Loading buzzer")
     buzzer = None
-    if flags.buzzer_type == "logistic":
-        from logistic_buzzer import LogisticBuzzer
-        buzzer = LogisticBuzzer(flags.logistic_buzzer_filename, flags.run_length, flags.num_guesses)
-    if flags.buzzer_type == 'lorabert':
-        from lorabert_buzzer import LoRABertBuzzer
-        buzzer = LoRABertBuzzer(filename=flags.lorabert_buzzer_filename, run_length=flags.run_length, num_guesses=1)
-        buzzer.initialize_model(flags.lorabert_buzzer_base_model, flags.lorabert_buzzer_rank, flags.lorabert_buzzer_alpha)
     if flags.buzzer_type == 'threshold':
         from threshold_buzzer import ThresholdBuzzer
         buzzer = ThresholdBuzzer(filename=flags.threshold_buzzer_filename, run_length=flags.run_length)
