@@ -20,7 +20,8 @@ The problem is when to trust that answer.  The `ThresholdBuzzer` class decides *
 In summary, you will have to make changes to:
 1. `__init__` and `__call__` in `tfidf_guesser.py`
 2. `threshold_predict` and `predict` in `threshold_buzzer.py`
-3. find threshold and cutoff parameters that gives good accuracy 
+3. find threshold and cutoff parameters that gives good accuracy
+4. set your threshold and cutoff numbers in ThresholdParameters `__init__` function
 
 This should be very simple, no more than five lines of code.  If you're
 writing far more than that, you're likely not taking advantage of built-in
@@ -428,7 +429,7 @@ First, you'll need to run the eval script.  You'll set the ThresholdBuzzer param
     python  eval.py --guesser_type=Tfidf \
     --TfidfGuesser_filename=models/TfidfGuesser \
      --questions=../data/qanta.buzzdev.json.gz --buzzer_guessers Tfidf \
-     --buzzer_type threshold --threshold_buzzer_cutoff 200 --threshold_buzzer_threshold 0.4
+     --buzzer_type threshold --threshold_buzzer_cutoff 200 --threshold_buzzer_threshold 0.30 --limit 200
 
 You'll see quite a bit of output, so I'm just going to walk through it bit by
     bit, comparing the salient components.
@@ -439,11 +440,11 @@ At the end of the eval script, you can see the
 overall accuracy, and the ratio of correct buzzes to incorrect buzzes (should
 be positive), the buzz position (where in the question it's buzzing) and the expected win (Find out what it is in FAQ).
 
-    Questions Right: 90 (out of 201) Accuracy: 0.75  Buzz ratio: .675 Buzz position: 0.054159
+    Questions Right: 18 (out of 200) Accuracy: 0.55  Buzz ratio: -0.12 Buzz position: -0.455566 Expected Wins: 0.013947
 
-And now we'll see what it is when we increase :
+And now we'll see what it is when we slightly increase both parameters:
 
-    Questions Right: 81 (out of 201) Accuracy: 0.74  Buzz ratio: .585 Buzz position: -0.195907
+    Questions Right: 17 (out of 200) Accuracy: 0.66  Buzz ratio: -0.07 Buzz position: -0.192017 Expected Wins: 0.026416
 
 Again, don't focus too much on the accuracy.  Looks at examples of where mistakes are happening (and in which direction) and see how you can adjust the thresholds accordingly.
 
@@ -451,9 +452,17 @@ How to turn it in
 =================
 
 Modify the two files `threshold_buzzer.py` and `tfidf_guesser.py` and upload followings to HW0: warmup on Gradescope.
-1. `threshold_buzzer.py`
+1. `threshold_buzzer.py` (Important: Don't forget to set your threshold and cutoff params inside `__init__` of ThresholdParameters!)
 2. `tfidf_guesser.py`
 3. all Tfidf saved models: `TfidfGuesser.questions.pkl`, `TfidfGuesser.answers.pkl`, `TfidfGuesser.tfidf.pkl` and `TfidfGuesser.vectorizer.pkl`
+
+The Gradescope autograder will test your files with a test data then give you back a result! 
+
+Points Possible
+===============
+
+You get full credit (seven points) for matching the baseline accuracy (65%) and can get up to
+three points for improving significantly beyond that.
 
 Extra Credit
 ============
@@ -462,10 +471,7 @@ Rather than setting the values manually, complete the `train` function in `thres
 
 Frequently Asked Questions
 ==========================
+**Q: What's the Expected Wins metric?**
 
+**A:** The expected wins is a polynomial that converts your buzz position into the probability that if you buzzed there, you would buzz before an "average human".  So the higher the better.  It rewards early buzzes far more than later buzzes.
 
-Points Possible
-===============
-
-You get full credit (seven points) for matching the baseline accuracy (85%) and can get up to
-three points for improving significantly beyond that.
