@@ -201,6 +201,7 @@ def load_buzzer(flags, guesser_params, load=False):
     if flags.buzzer_type == 'threshold':
         from threshold_buzzer import ThresholdBuzzer
         buzzer = ThresholdBuzzer(filename=flags.threshold_buzzer_filename, run_length=flags.run_length)
+        buzzer.initialize_threshold(flags.threshold_buzzer_threshold, flags.threshold_buzzer_cutoff)
 
     assert buzzer is not None, "Buzzer (type=%s) not initialized" % flags.buzzer_type
     
