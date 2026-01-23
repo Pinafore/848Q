@@ -15,11 +15,11 @@ What you have to do
 
 The `TfidfGuesser` class takes a question and returns a guess of what the answer is.  You need to extract what the question is asking about and return a promising answer.  You should use sklearn's tf-idf retrieval (inside `__init__` function); this should be straightforward. The code for processing the data is provided, you should understand it but not modify it. You also have to fix `__call__` function, we already computed cosine similarity for you, you just to return the top guesses accordingly. 
 
-The problem is when to trust that answer.  The `ThresholdBuzzer` class decides **when** to trust that answer. You will need to implement `threshold_predict` function, then, inspect the output of your guesser class and try to find a good value for the two parameters that control when to buzz in: how much of the question needs to be revealed before it trusts the answer (`cutoff`) and how high the score of the buzzer needs to be before it answers (`threshold`). 
+The problem is when to trust that answer.  The `ThresholdBuzzer` class decides **when** to trust that answer. You will need to implement `threshold_predict` function and fix `predict` function to use `threshold_predict` for predictions. Then, inspect the output of your guesser class and try to find a good value for the two parameters that control when to buzz in: how much of the question needs to be revealed before it trusts the answer (`cutoff`) and how high the score of the buzzer needs to be before it answers (`threshold`). 
 
 In summary, you will have to make changes to:
 1. `__init__` and `__call__` in `tfidf_guesser.py`
-2. `threshold_predict` in `threshold_buzzer.py`
+2. `threshold_predict` and `predict` in `threshold_buzzer.py`
 3. find threshold and cutoff parameters that gives good accuracy 
 
 This should be very simple, no more than five lines of code.  If you're
@@ -428,7 +428,7 @@ First, you'll need to run the eval script.  You'll set the ThresholdBuzzer param
     python  eval.py --guesser_type=Tfidf \
     --TfidfGuesser_filename=models/TfidfGuesser \
      --questions=../data/qanta.buzzdev.json.gz --buzzer_guessers Tfidf \
-     --buzzer Threshold
+     --buzzer_type threshold --threshold_buzzer_cutoff 200 --threshold_buzzer_threshold 0.4
 
 You'll see quite a bit of output, so I'm just going to walk through it bit by
     bit, comparing the salient components.
@@ -437,11 +437,11 @@ You'll see quite a bit of output, so I'm just going to walk through it bit by
 
 At the end of the eval script, you can see the
 overall accuracy, and the ratio of correct buzzes to incorrect buzzes (should
-be positive), and the buzz position (where in the question it's buzzing).
+be positive), the buzz position (where in the question it's buzzing) and the expected win (Find out what it is in FAQ).
 
     Questions Right: 90 (out of 201) Accuracy: 0.75  Buzz ratio: .675 Buzz position: 0.054159
 
-And now we'll see what it is without the length features:
+And now we'll see what it is when we increase :
 
     Questions Right: 81 (out of 201) Accuracy: 0.74  Buzz ratio: .585 Buzz position: -0.195907
 
