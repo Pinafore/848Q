@@ -170,6 +170,8 @@ def eval_buzzer(buzzer, questions, history_length, history_depth):
     examples = defaultdict(list)
     expected_wins = []
     neg_on_question = defaultdict(bool)
+    question_seen = {}
+    question_length = defaultdict(int)
     
     if len(feature_dict) < len(predict):
         logging.warning("Empty feature dict (this is normal and expected for buzzers like LoraBERT)")
@@ -188,6 +190,8 @@ def eval_buzzer(buzzer, questions, history_length, history_depth):
 
         assert qid in question_max_length
         percentage = run_length / question_max_length[qid]
+
+        question_length[qid] = max(question_length[qid], len(meta["text"]))
         
         if guess_correct:
             if buzz:
@@ -197,6 +201,8 @@ def eval_buzzer(buzzer, questions, history_length, history_depth):
                     expected_wins.append(-3)
                 outcomes["best"] += 1
                 examples["best"].append(features)
+                if not qid in question_seen:
+                    question_seen[qid] = len(meta["text"])
             else:
                 # Because all negative expected wins will be thrown out, let's track state with the following scheme:
                 # -1: Waiting without neg
@@ -215,6 +221,8 @@ def eval_buzzer(buzzer, questions, history_length, history_depth):
                 neg_on_question[qid] = True
                 outcomes["aggressive"] += 1
                 examples["aggressive"].append(features)
+                if not qid in question_seen:
+                    question_seen[qid] = -len(meta["text"])
             else:
                 if neg_on_question[qid]:
                     expected_wins.append(-1.5)
@@ -222,10 +230,23 @@ def eval_buzzer(buzzer, questions, history_length, history_depth):
                     expected_wins.append(-1)
                 outcomes["waiting"] += 1
                 examples["waiting"].append(features)
+    
+    unseen_characters = 0.0
+
+    number_questions = 0
+    for question in question_length:
+        number_questions += 1
+        length = question_length[question]
+        if question in question_seen:
+            if question_seen[question] > 0:
+                # The guess was correct
+                unseen_characters += 1.0 - question_seen[question] / length
+            else:
+                unseen_characters -= 1.0 + question_seen[question] / length
 
     assert len(expected_wins) > 0, "Did not get any questions"
-    print(expected_wins)
-    return outcomes, examples, sum(x for x in expected_wins if x >= 0) / len(question_max_length)
+
+    return outcomes, examples, unseen_characters / number_questions, sum(x for x in expected_wins if x >= 0) / len(question_max_length)
                 
 def calibration(confidences, epsilon=0.001):
     max_conf = max(abs(x) for x in confidences)
@@ -255,7 +276,7 @@ if __name__ == "__main__":
     guesser = load_guesser(flags, guesser_params, load=flags.load)    
     if flags.evaluate == "buzzer":
         buzzer = load_buzzer(flags, buzzer_params, load=True)
-        outcomes, examples, ew = eval_buzzer(buzzer, questions,
+        outcomes, examples, unseen, ew = eval_buzzer(buzzer, questions,
                                              history_length=flags.buzzer_history_length,
                                              history_depth=flags.buzzer_history_depth)
     elif flags.evaluate == "guesser":
@@ -282,11 +303,12 @@ if __name__ == "__main__":
             for weight, feature in zip(buzzer._classifier.coef_[0], buzzer._featurizer.feature_names_):
                 print("%40s: %0.4f" % (feature.strip(), weight))
         
-        print("Questions Right: %i (out of %i) Accuracy: %0.2f  Buzz ratio: %0.2f Expected Wins: %f" %
+        print("Questions Right: %i (out of %i) Accuracy: %0.2f  Buzz ratio: %0.2f Buzz position: %f Expected Wins: %f" %
               (outcomes["best"], # Right
                total,            # Total
                (outcomes["best"] + outcomes["waiting"]) / total, # Accuracy
                (outcomes["best"] - outcomes["aggressive"] * 0.5) / total, # Ratio
+               unseen, # position
                ew))
     elif flags.evaluate == "guesser":
         print("Precision @1: %0.4f Recall: %0.4f Calibration Error: %0.4f" %
