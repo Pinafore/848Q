@@ -54,8 +54,8 @@ function, because this establishes your tf-idf index. (You might want to run `mk
 
 
 This outputs the vectorizer (which turns text into a matrix) into the models
-directory (you might need to create the directory called ``models``).  After
-you've done that, you can now run the guesser.
+directory. You might want to increase examples through `--limit`. After
+you've done training, you can now evaluate the guesser.
 
 *BEWARE*: The code I've given you runs end to end, but it's not correct.  It
  creates random representations of all of the documents and the retrieval
