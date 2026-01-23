@@ -444,7 +444,7 @@ be positive), the buzz position (where in the question it's buzzing) and the exp
 
 And now we'll see what it is when we slightly increase both parameters:
 
-    Questions Right: 17 (out of 200) Accuracy: 0.66  Buzz ratio: -0.07 Buzz position: -0.192017 Expected Wins: 0.026416
+    Questions Right: 14 (out of 200) Accuracy: 0.71  Buzz ratio: -0.05 Buzz position: -0.117014 Expected Wins: 0.024796
 
 Again, don't focus too much on the accuracy.  Looks at examples of where mistakes are happening (and in which direction) and see how you can adjust the thresholds accordingly.
 
@@ -461,7 +461,7 @@ The Gradescope autograder will test your files with a test data then give you ba
 Points Possible
 ===============
 
-You get full credit (seven points) for matching the baseline accuracy (65%) and can get up to
+You get full credit (seven points) for matching the baseline accuracy (70%) and can get up to
 three points for improving significantly beyond that.
 
 Extra Credit
