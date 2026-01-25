@@ -55,6 +55,10 @@ class ThresholdBuzzer(Buzzer):
         self._classifier.coef_ = [[]]
 
         self.threshold_feature: Optional[str] = None
+        
+    def initialize_threshold(self, threshold: float, cutoff: int) -> None:
+        self.threshold = threshold
+        self.cutoff = cutoff
 
     @staticmethod
     def threshold_predict(
@@ -189,7 +193,8 @@ class ThresholdBuzzer(Buzzer):
         self.set_confidence_feature(self._features[0].keys())
         assert self.threshold_feature is not None
 
-        for feat_vec in self._features:
+        for question, feat_vec in zip(self._runs, self._features):
+            # HW TODO: now we only use confidence threshold, change this to use threshold_predict to cover both conditions
             if feat_vec[self.threshold_feature] > self.threshold:
                 predictions.append(1)
             else:
