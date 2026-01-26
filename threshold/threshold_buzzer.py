@@ -107,8 +107,7 @@ class ThresholdBuzzer(Buzzer):
             with open(f"{self.filename}.pkl", "rb") as infile:
                 self.threshold, self.cutoff = pickle.load(infile)
         except (IOError, EOFError):
-            self.threshold = 0.7
-            self.cutoff = 100
+            print("Could not load threshold buzzer parameters through .pkl, using params from arg parse")
 
     def save(self) -> None:
         """
