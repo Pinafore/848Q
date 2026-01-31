@@ -55,7 +55,7 @@ function, because this establishes your tf-idf index. (You might want to run `mk
 
 
 This outputs the vectorizer (which turns text into a matrix) into the models
-directory. You might want to increase examples through `--limit`. After
+directory. You might want to increase examples through `--limit`, however, the number shouldn't be over 100K or else your models would be too big to upload. After
 you've done training, you can now evaluate the guesser.
 
 *BEWARE*: The code I've given you runs end to end, but it's not correct.  It
