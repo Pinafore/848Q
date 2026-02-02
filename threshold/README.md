@@ -461,8 +461,8 @@ The Gradescope autograder will test your files with a test data then give you ba
 Points Possible
 ===============
 
-You get full credit (seven points) for matching the baseline accuracy (70%) and can get up to
-three points for improving significantly beyond that.
+You get full credit (seven points) for matching the baseline expected win and can get up to
+three points for improving significantly beyond that. The expected win baseline is at 0.09. This is evaluated using the test dataset, which is only available when you submit your HW! After you submitted, you can check an autograder score and a leaderboard!
 
 Extra Credit
 ============
