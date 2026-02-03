@@ -12,16 +12,18 @@ What You Have to Do
 ===================
 
 Your primary deliverable will be a presentation that you'll record for
-the class.  We will also have an in-class discussion throughout the
-second half of the semester.
+the class.  We will also have an in-class discussion at an appropriate
+time so that your paper thematically fits in the rest of the semester.
 
 How long do you have
 ====================
 Your presentation should be at least ten minutes.  You don't need to review
 machine reading, standard datasets, or the motivation for QA.  So
-don't use your precious time on stuff that "we already know".  There
+don't use your precious time on stuff that "we already know" (please
+also check the already posted lectures for the subjects that we'll
+cover, certainly don't repeat anything there).  There
 is no maximum length, but if you go longer than 10 minutes, I would
-encourage you to break it up into smaller pieces.
+encourage you to break it up into smaller pieces (like I do in my videos).
 
 How to Present the Paper
 =================
@@ -41,7 +43,7 @@ Questions
 ===========
 
  *Q*: Do I have to show my face?
- *A*: No.
+ *A*: No.  But I think it's better if you do.
 
  *Q*: Can I use text to speech?
  *A*: In almost all cases, it's better to use your own voice.
@@ -50,7 +52,8 @@ Questions
  *A*: No.
 
  *Q*: Does it have to be a conference paper?
- *A*: No, books are okay, as are workshop papers.  If it's a preprint,
+ *A*: No, books are okay, as are workshop papers.  If it's a preprint
+ that has not been accepted by a conference,
 please clear it with me first (unless it's from one of the authors I
 list below).
 
@@ -58,20 +61,23 @@ list below).
  *A*: It should have a clear connection to question answering.  If in
  *doubt, ask on Piazza.
 
+*Q*: Do I have to use slides?  
+*A*: No, but usually some sort of visual aid is useful.  It would be
+fine to present the paper as your work through it and annotate it.
+
 Groups
 ======
 
-Unlike other homeworks, this must be done in groups of 2-4.  There are
-no constraints on whom you can be in a group with (but I'd encourage
-you to try to form groups with new people, just like you've been doing
-for the homeworks.)
+You can join with another person to present a paper, but you can also
+elect to present a paper by yourself.  Learning from previous years,
+larger groups tend to not work well because it's hard for everyone to contribute.
 
 Where to Look for Papers
 =======================
 
 Part of this exercise is for me to discover papers that I wouldn't
-have found normally, so I don't want to give you a list of papers that
-you should present. Here are some ideas of people whose work is worth
+have found normally, so you are not obligated to choose from the [list
+of papers I created](https://docs.google.com/spreadsheets/d/1pRIFnl8cV9yBq5Xr2cj1YIeETzB9knY90sToPpV78w0/edit?gid=0#gid=0). Here are some ideas of people whose work is worth
 looking at (but many do more than just QA):
 
   * [Eric Wallace](https://scholar.google.com/citations?user=SgST3LkAAAAJ)
@@ -96,8 +102,11 @@ picking one person at a particular university.
 
 Please think about your paper far enough in advance so that you can
 ask if it's a good paper to talk about.  Record your signup
-[here](https://docs.google.com/spreadsheets/d/1gJckfe7zK0a3-HJ0xJKGuYegPErUkU5t5o2WcQoAu0g/edit?usp=sharing).
-But note that we're not allowing duplicate papers.
+[here](https://docs.google.com/spreadsheets/d/1pRIFnl8cV9yBq5Xr2cj1YIeETzB9knY90sToPpV78w0/edit?gid=0#gid=0).
+But note that we're not allowing duplicate papers, so the first person
+to claim a paper has dibs.
+
+
 
 What to Cover
 ================
@@ -106,7 +115,7 @@ This is not meant to be an exhaustive list, but please try to cover:
 
 * What makes the paper interesting.  Why is it worth knowing about?
 * Talk about the specifics of its contribution.  What did it do
-that other papers didn't.
+that other papers didn't?
 * Talk about any limitations or problems the paper has.  Be
 honest but kind.  This might motivate a new extension / project based
 on the ideas of the paper.  
@@ -119,12 +128,18 @@ to learn from this paper about presentation, share them!
 
 How to Divide Work
 ==================
+
 It's fine to divide work however you want.  One person can make
 slides, one person can talk, one person can make figures.  Or all
-three people can talk: playing each of the roles if you do the RPG model.  It's up to you, as long as the group agrees.
+ people can talk: playing each of the roles if you do the RPG model.  It's up to you, as long as the group agrees.
 
 Grading
 =======
 
 This assignment is worth 30 points for the presentations and 20 points
-for the QA session you lead during class.
+for the QA session you lead during class.  
+
+Additional discussants will sign up once the entire set of papers has
+been established (e.g., taking on an additional role in the "paper
+roleplaying" blog post).  That part of the paper presentation is worth
+an additional 20 points.
