@@ -463,9 +463,9 @@ Points Possible
 
 You get full credit (seven points) for matching the baseline expected
 win and can get up to three points for improving significantly beyond
-that. The expected win baseline is at 0.01 on dev data, you should do better than
+that. The expected win baseline is 0.01 on dev data, you should do better than
 this on the expected win metric. When you submit on gradescope, your code will be evaluated on the test
-dataset (this might result with higher EW), then you can check an autograder score and a leaderboard!
+dataset (this might result with higher EW, our baseline gets EW 0.03 there. You can check an autograder score and a leaderboard!
 
 Extra Credit
 ============
