@@ -463,11 +463,9 @@ Points Possible
 
 You get full credit (seven points) for matching the baseline expected
 win and can get up to three points for improving significantly beyond
-that. The expected win baseline is at 0.01, you should do better than
-this on the expected win metric. This is evaluated using the test
-dataset, which is only available when you submit your HW, but you can
-get a good idea of how well you're doing by running the eval script locally! After you
-submitted, you can check an autograder score and a leaderboard!
+that. The expected win baseline is at 0.01 on dev data, you should do better than
+this on the expected win metric. When you submit on gradescope, your code will be evaluated on the test
+dataset (this might result with higher EW), then you can check an autograder score and a leaderboard!
 
 Extra Credit
 ============
