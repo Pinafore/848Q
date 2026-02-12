@@ -284,10 +284,33 @@ class LoRABertBuzzer(Buzzer):
         trainer.train()
 
     def save(self):
-        torch.save(self.model, "%s.model" % self.filename)
+        # save only trained params
+        model_state_dict = {
+            name: param.detach().cpu() for name, param in self.model.named_parameters() if param.requires_grad
+		}
+
+        model_config = {
+            "model_state_dict": model_state_dict,
+            "model_name": getattr(self, "model_name", "distilbert-base-uncased"),
+            "rank": getattr(self, "rank", None),
+            "alpha": getattr(self, "alpha", None)
+			}
+
+        torch.save(model_config, "lorabert.model")
 
     def load(self):
-        self.model = torch.load("%s.model" % self.filename)
+        base_model_name = getattr(
+			self, "lorabert_buzzer_base_model", "distilbert-base-uncased"
+		)
+
+        self.model, self.tokenizer = initialize_base_model(model_name=base_model_name)
+
+        rank = getattr(self, "lorabert_buzzer_rank", 16)
+        alpha = getattr(self, "lorabert_buzzer_alpha", 1.0)
+        add_lora(self.model.distilbert.transformer, rank, alpha)
+
+        saved_state_dict = torch.load("lorabert.model")
+        self.model.load_state_dict(saved_state_dict, strict=False)
 
 
 if __name__ == "__main__":
