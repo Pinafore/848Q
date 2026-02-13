@@ -296,7 +296,7 @@ class LoRABertBuzzer(Buzzer):
             "alpha": getattr(self, "alpha", None)
 			}
 
-        torch.save(model_config, "lorabert.model")
+        torch.save(model_config, "./models/lorabert.model")
 
     def load(self):
         base_model_name = getattr(
@@ -309,7 +309,7 @@ class LoRABertBuzzer(Buzzer):
         alpha = getattr(self, "lorabert_buzzer_alpha", 1.0)
         add_lora(self.model.distilbert.transformer, rank, alpha)
 
-        saved_state_dict = torch.load("lorabert.model")
+        saved_state_dict = torch.load("./models/lorabert.model")
         self.model.load_state_dict(saved_state_dict, strict=False)
 
 
