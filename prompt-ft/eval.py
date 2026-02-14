@@ -289,5 +289,9 @@ if __name__ == "__main__":
                (outcomes["best"] - outcomes["aggressive"] * 0.5) / total, # Ratio
                ew))
     elif flags.evaluate == "guesser":
+        try: 
+            calibration_err = calibration(confidences)
+        except Exception as e:
+            calibration_err = 0.0
         print("Precision @1: %0.4f Recall: %0.4f Calibration Error: %0.4f" %
-              (outcomes["hit"]/total, outcomes["close"]/total, calibration(confidences)))
+            (outcomes["hit"]/total, outcomes["close"]/total, calibration_err))
