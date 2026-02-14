@@ -117,26 +117,33 @@ To have a good enough solution, you must both
 
 What to Submit
 =====
-We create an assignment where you will submit your trained guesser and buzzer. Please submit following files to Gradescope.
+Since we can't run everything on Gradescope, there are two submissions you need to do:
+1. you will have to submit **codes/models** to a [848Q LLM Optimization leaderboard](https://huggingface.co/spaces/wwongkam848Q/848QLLMOptimization).
+2. then, you will submit **analysis** as pdf file on Gradescope, and, please provide a `job_id` given by a leaderboard to ease our grading work. :)
 
-* Your `analysis.pdf` file (explaining what you did)
+Please name your files consistently and include all files as follows:
+1. Leaderboard (zip as `submission.zip`):
+  	* Your `lorabert.model` file (where you did your finetuning).
 
-* Your `lorabert.model` file (where you did your finetuning).
+  	* Your `guesser.json` model (the final prompts found via teleprompting).
 
-* Your `dspy.json` model (the final prompts found via teleprompting).
+  	* Your `parameters.py` with appropriate defaults to run your model
 
-* Your `parameters.py` with appropriate defaults to run your model
+  	* Your `ollama_guesser.py` with any changes to the prompt definitions
 
-* Your `ollama_guesser.py` with any changes to the prompt definitions
+  	* Your `lorabert_buzzer.py` with completed code
 
-* Your `lorabert_buzzer.py` with completed code
+  	* Your `TfidfGuesser.answers.pkl`, `TfidfGuesser.questions.pkl`, `TfidfGuesser.tfidf.pkl` and `TfidfGuesser.vectorizer.pkl` (a tfidf model)
 
-* Your `TfidfGuesser.answers.pkl`, `TfidfGuesser.questions.pkl`, `TfidfGuesser.tfidf.pkl` and `TfidfGuesser.vectorizer.pkl` (a tfidf model)
+2. Gradescope:
+  	* Your `analysis.pdf` file (explaining what you did, including extra credits attempts)
 
-
-We will update these scores on Gradescope after running:
+We will update these scores on the leaderboard after running:
 * Guesser: precision and recall,
-* Buzzer: expected win, best_score, buzz ratio, buzz position.
+* Buzzer: expected win, accuracy, buzz ratio;
+* where we rank by **expected win**
+
+If you are in a **group**, please have only **one** person submit codes/models to the leaderboard, THEN, submit an analysis pdf to Gradescope as a group (don't forget to include all members!).
 
 Analysis
 ======
