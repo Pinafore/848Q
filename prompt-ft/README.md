@@ -57,7 +57,7 @@ But whatever you do, the default main function of `ollama_guesser.py` will
 train a teleprompter for you.  At the moment, the code is everything I had in
 my lecture.  You may want to do more or less than what I did.
 
-   ./venv/bin/python3 ollama_guesser.py
+	./venv/bin/python3 ollama_guesser.py
 
 What you Have to Do (Buzzer)
 =====
@@ -92,8 +92,7 @@ This will go faster afterward.
   function.  You will probably want to create a (partial
   object)[https://docs.python.org/3/library/functools.html#partial-objects].  
 
-* The only changes you should have to make in LoRABertBuzzer are to add
-  methods to load and save the buzzer to a file.
+* Make sure that `load` and `save` methods in LoRABertBuzzer work, if not, you will need to customize it to work with your trained model (`./models/lorabert.model`).
 
 * Run adaptation on some data (use `limit` if you don't have a GPU).  This is
   more of a proof-of-concept, and you don't need great accuracy to satisfy the
