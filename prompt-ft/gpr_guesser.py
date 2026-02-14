@@ -86,14 +86,6 @@ class GprGuesser(Guesser):
 
         return shard
 
-              
-
-
-            return json.loads(ans)           # sol            
-
-
-
-
 
     @staticmethod
     def clean(raw_question):

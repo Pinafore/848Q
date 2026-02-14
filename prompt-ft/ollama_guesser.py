@@ -159,6 +159,7 @@ class OllamaDspy(Guesser):
         self._confidence_metric = lambda x, y: (x - y) ** 2
         self._model = CalibratedRAG()
         self._optimized = None
+        self.set_ollama_model(params.ollama_guesser_model)
 
         if params.ollama_guesser_opt_algorithm == 'MIPROv2':
             from dspy.teleprompt import MIPROv2
