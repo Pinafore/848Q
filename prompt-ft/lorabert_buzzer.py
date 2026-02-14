@@ -135,7 +135,10 @@ class LoRABertBuzzer(Buzzer):
         """
         Initialize the model and add LoRA layers.
         """
-
+		
+		self.model_name = model_name 
+        self.rank = rank 
+        self.alpha = alpha
         self.model, self.tokenizer = initialize_base_model(model_name=model_name)
         add_lora(self.model.distilbert.transformer, rank, alpha)
 
