@@ -118,7 +118,7 @@ To have a good enough solution, you must both
 What to Submit
 =====
 Since we can't run everything on Gradescope, there are two submissions you need to do:
-1. you will have to submit **codes/models** to a [848Q LLM Optimization leaderboard](https://huggingface.co/spaces/wwongkam848Q/848QLLMOptimization).
+1. you will have to submit **codes/models** to a [848Q LLM Optimization leaderboard](https://huggingface.co/spaces/wwongkam848Q/848QLLMOptimization). Please keep in mind that this may take more than **an hour** to evaluate both guesser and buzzer,
 2. then, you will submit **analysis** as pdf file on Gradescope, and, please provide a `job_id` given by a leaderboard to ease our grading work. :)
 
 Please name your files consistently and include all files as follows:
