@@ -104,7 +104,8 @@ class CalibratedRAG(dspy.Module):
                 results = self.retrievers[retriever](query, self._topk)
                 for result in results:
                     context += "%s: %s: %s\n" % (result["guess"], retriever, result["question"])
-            contexts.append(queries)
+            # contexts.append(queries)
+            contexts.append(context)
             
         guess_result = self.guess_generator(queries=queries, contexts=contexts, question=question)
 
