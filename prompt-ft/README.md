@@ -55,9 +55,11 @@ Some suggestions on what you could do (non-exhaustive, and you can try other stu
 
 But whatever you do, the default main function of `ollama_guesser.py` will
 train a teleprompter for you.  At the moment, the code is everything I had in
-my lecture.  You may want to do more or less than what I did.
+my lecture.  You may want to do more or less than what I did. 
 
-	./venv/bin/python3 ollama_guesser.py
+	./venv/bin/python3 ollama_guesser.py --limit 1000
+
+You can train a whole dataset by removing `--limit` or you can increase/decrease this number as you see fit with your computational resources!
 
 What you Have to Do (Buzzer)
 =====
