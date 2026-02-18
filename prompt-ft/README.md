@@ -137,6 +137,8 @@ Please name your files consistently and include all files as follows:
   	* Your `guesser.json` model (the final prompts found via teleprompting).
 
   	* Your `parameters.py` with appropriate defaults to run your model
+     
+    * Your `tfidf_guesser.py` with completed code from last HW, or you may optimize even more
 
   	* Your `ollama_guesser.py` with any changes to the prompt definitions
 
