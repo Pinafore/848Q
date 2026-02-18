@@ -11,6 +11,13 @@ a question is correct or not.
 
 This homework is worth 35 points, but distributed over (at most) three people.
 
+Additional Lectures
+========
+
+On LoRA: https://www.youtube.com/watch?v=UXa6Uf8TluU
+Prompting vs. DSPy: https://www.youtube.com/watch?v=hyUeko4GLxo
+Using DSPy for quiz bowl questions (relevant for this homework): https://www.youtube.com/watch?v=sG3Tz0-Vw58&t=623s&pp=ygUQYm95ZC1ncmFiZXIgZHNweQ%3D%3D
+
 General Setup
 =====
 
@@ -44,7 +51,7 @@ Recall is much more important than precision.
 
 The first priority is to get it running and sending requests to Ollama.  The
 actual optimization process can take a while (it depends on your hardware), so
-don't leave this until the last minute. 
+don't leave this until the last minute.
 
 Some suggestions on what you could do (non-exhaustive, and you can try other stuff):
 - Change the pipeline to explicitly determine the lexical answer type
@@ -55,7 +62,7 @@ Some suggestions on what you could do (non-exhaustive, and you can try other stu
 
 But whatever you do, the default main function of `ollama_guesser.py` will
 train a teleprompter for you.  At the moment, the code is everything I had in
-my lecture.  You may want to do more or less than what I did. 
+my lecture.  You may want to do more or less than what I did.
 
 	./venv/bin/python3 ollama_guesser.py --limit 1000
 
@@ -92,7 +99,7 @@ This will go faster afterward.
 * Now that we have the tools for changing some layers, we now need to add them
   to the frozen model we created in `initialize_base_model` in the `add_lora`
   function.  You will probably want to create a (partial
-  object)[https://docs.python.org/3/library/functools.html#partial-objects].  
+  object)[https://docs.python.org/3/library/functools.html#partial-objects].
 
 * Make sure that `load` and `save` methods in LoRABertBuzzer work, if not, you will need to customize it to work with your trained model (`./models/lorabert.model`).
 
@@ -192,13 +199,13 @@ Hints
 If you have access to a GPU, you should use it whenever you can for both
 Ollama and for the BERT adaptation.
 
-You'll want to tune your tf-idf retriever. 
+You'll want to tune your tf-idf retriever.
 
     ./venv/bin/python3 eval.py --evaluate guesser --questions ../data/qanta.guessdev.json.gz --cutoff 200 --num_guesses 10
 
 Some ideas:
      * Add bigrams to the vocabulary
-     
+
      * Make sure your eval is not on the full question (the default).  A
        suggestion would be to do 200 characters (as above), but less is
        obviously better.  Recall is more important than precision.
@@ -230,7 +237,7 @@ Once that's trained, you can evaluate it as usual:
 It could be that you've done a really good job getting DSPy to do everything
 you've need (or you heavily used buzzer train / dev).  In which case you can
 use threshold_buzzer.py if the BERT training is becoming difficult.
-      
+
       ./venv/bin/python3 -i eval.py --evaluate buzzer --questions ../data/qanta.buzzdev.json.gz --limit 100 --num_guesses 1 --buzzer_guessers=Tfidf --buzzer_type='threshold' --threshold_buzzer_threshold=0.4
 
 If you do this, make sure you set `parameters.py` to use that buzzer by
@@ -286,8 +293,13 @@ You may want to decompose this into multiple teleprompters rather than having ev
 *A:* In the script you use to submit your job, put:
 
     ollama serve &
-    python3 ollama_guesser.py (with their configs) 
+    python3 ollama_guesser.py (with their configs)
 
 *Q: My files are too big!*
 
 *A:* For LoRA, Make sure that you're not updating all BERT parameters.  For tfidf, make sure you're doing reasonable things with the vocabulary.
+
+*Q: My tf-idf guesser isn't returning documents?*
+
+*A:* It could be that the batch_guess function isn't implemented.
+ Delete it and make sure that it's just using your default guess function.
