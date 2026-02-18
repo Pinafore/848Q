@@ -13,9 +13,9 @@ extra credit.
 What you have to do
 ===================
 
-The `TfidfGuesser` class takes a question and returns a guess of what the answer is.  You need to extract what the question is asking about and return a promising answer.  You should use sklearn's tf-idf retrieval (inside `__init__` function); this should be straightforward. The code for processing the data is provided, you should understand it but not modify it. You also have to fix `__call__` function, we already computed cosine similarity for you, you just to return the top guesses accordingly. 
+The `TfidfGuesser` class takes a question and returns a guess of what the answer is.  You need to extract what the question is asking about and return a promising answer.  You should use sklearn's tf-idf retrieval (inside `__init__` function); this should be straightforward. The code for processing the data is provided, you should understand it but not modify it. You also have to fix `__call__` function, we already computed cosine similarity for you, you just to return the top guesses accordingly.
 
-The problem is when to trust that answer.  The `ThresholdBuzzer` class decides **when** to trust that answer. You will need to implement `threshold_predict` function and fix `predict` function to use `threshold_predict` for predictions. Then, inspect the output of your guesser class and try to find a good value for the two parameters that control when to buzz in: how much of the question needs to be revealed before it trusts the answer (`cutoff`) and how high the score of the buzzer needs to be before it answers (`threshold`). 
+The problem is when to trust that answer.  The `ThresholdBuzzer` class decides **when** to trust that answer. You will need to implement `threshold_predict` function and fix `predict` function to use `threshold_predict` for predictions. Then, inspect the output of your guesser class and try to find a good value for the two parameters that control when to buzz in: how much of the question needs to be revealed before it trusts the answer (`cutoff`) and how high the score of the buzzer needs to be before it answers (`threshold`).
 
 In summary, you will have to make changes to:
 1. `__init__` and `__call__` in `tfidf_guesser.py`
@@ -42,7 +42,7 @@ function, because this establishes your tf-idf index. (You might want to run `mk
     --question_source=gzjson \
     --questions=../data/qanta.guesstrain.json.gz \
     --logging_file=guesser.log \
-    --limit=10 
+    --limit=10
     Setting up logging
     INFO:root:Using device 'cpu' (cuda flag=False)
     INFO:root:Initializing guesser of type Tfidf
@@ -55,7 +55,7 @@ function, because this establishes your tf-idf index. (You might want to run `mk
 
 
 This outputs the vectorizer (which turns text into a matrix) into the models
-directory. You might want to increase examples through `--limit`. After
+directory. You might want to increase examples through `--limit`, however, the number shouldn't be over 100K or else your models would be too big to upload. After
 you've done training, you can now evaluate the guesser.
 
 *BEWARE*: The code I've given you runs end to end, but it's not correct.  It
@@ -456,13 +456,16 @@ Modify the two files `threshold_buzzer.py` and `tfidf_guesser.py` and upload fol
 2. `tfidf_guesser.py`
 3. all Tfidf saved models: `TfidfGuesser.questions.pkl`, `TfidfGuesser.answers.pkl`, `TfidfGuesser.tfidf.pkl` and `TfidfGuesser.vectorizer.pkl`
 
-The Gradescope autograder will test your files with a test data then give you back a result! 
+The Gradescope autograder will test your files with a test data then give you back a result!
 
 Points Possible
 ===============
 
-You get full credit (seven points) for matching the baseline accuracy (70%) and can get up to
-three points for improving significantly beyond that.
+You get full credit (seven points) for matching the baseline expected
+win and can get up to three points for improving significantly beyond
+that. The expected win baseline is `0.01` on dev data, you should do better than
+this on the expected win metric. When you submit on gradescope, your code will be evaluated on the test
+dataset (this might result with higher EW, our baseline gets EW `0.03` there). You can check an autograder score and a leaderboard!
 
 Extra Credit
 ============
@@ -474,4 +477,3 @@ Frequently Asked Questions
 **Q: What's the Expected Wins metric?**
 
 **A:** The expected wins is a polynomial that converts your buzz position into the probability that if you buzzed there, you would buzz before an "average human".  So the higher the better.  It rewards early buzzes far more than later buzzes.
-

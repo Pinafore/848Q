@@ -55,10 +55,6 @@ class ThresholdBuzzer(Buzzer):
         self._classifier.coef_ = [[]]
 
         self.threshold_feature: Optional[str] = None
-        
-    def initialize_threshold(self, threshold: float, cutoff: int) -> None:
-        self.threshold = threshold
-        self.cutoff = cutoff
 
     @staticmethod
     def threshold_predict(
@@ -79,7 +75,6 @@ class ThresholdBuzzer(Buzzer):
         Returns:
             True if the system should buzz, False otherwise.
         """
-        # HW TODO: check the two conditions then return True/False
         return False
 
     def set_confidence_feature(self, feat_vec: Iterable[str]) -> None:
@@ -107,7 +102,8 @@ class ThresholdBuzzer(Buzzer):
             with open(f"{self.filename}.pkl", "rb") as infile:
                 self.threshold, self.cutoff = pickle.load(infile)
         except (IOError, EOFError):
-            print("Could not load threshold buzzer parameters through .pkl, using params from arg parse")
+            self.threshold = 0.7
+            self.cutoff = 100
 
     def save(self) -> None:
         """
@@ -117,11 +113,6 @@ class ThresholdBuzzer(Buzzer):
             pickle.dump((self.threshold, self.cutoff), outfile)
 
     def train(self, questions: Iterable[str]) -> None:
-        """
-        Train the threshold buzzer parameters. Hint: You may want to
-        train with data/qanta.buzztrain.json.gz to find best threshold and length cutoff.
-        """
-
         assert len(self._features) == len(self._questions), "Features not built.  Did you run build_features?"
         self.set_confidence_feature(self)
 
@@ -188,12 +179,11 @@ class ThresholdBuzzer(Buzzer):
 
         predictions: List[int] = []
 
-        # JBG's TODO: threshold_feature is referenced inconsistently here
+        # TODO: threshold_feature is referenced inconsistently here
         self.set_confidence_feature(self._features[0].keys())
         assert self.threshold_feature is not None
 
-        for question, feat_vec in zip(self._runs, self._features):
-            # HW TODO: now we only use confidence threshold, change this to use threshold_predict to cover both conditions
+        for feat_vec in self._features:
             if feat_vec[self.threshold_feature] > self.threshold:
                 predictions.append(1)
             else:
