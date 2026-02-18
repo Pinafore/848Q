@@ -203,7 +203,7 @@ Ollama and for the BERT adaptation.
 
 You'll want to tune your tf-idf retriever.
 
-    ./venv/bin/python3 eval.py --evaluate guesser --questions ../data/qanta.guessdev.json.gz --cutoff 200 --num_guesses 10
+    ./venv/bin/python3 eval.py --evaluate guesser --questions ../data/qanta.guessdev.json.gz --cutoff 200 --num_guesses 10 --guesser_type Tfidf
 
 Some ideas:
      * Add bigrams to the vocabulary
