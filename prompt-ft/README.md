@@ -317,4 +317,4 @@ point, you can "work up" to something more complicated by:
 caching)
 2. Removing steps (e.g., directly use the question for the RAG step
 rather than formulating a new query)
-3. Use different optimizers in DSPy.
+3. Use different optimizers in DSPy.  (default is `--opt_algorithm = MIPROv2`, but you change to `--opt_algorithm = BootstrapFewShotWithRandomSearch` or other optimizers in dspy)
