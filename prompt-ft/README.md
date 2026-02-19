@@ -305,3 +305,16 @@ You may want to decompose this into multiple teleprompters rather than having ev
 
 *A:* It could be that the batch_guess function isn't implemented.
  Delete it and make sure that it's just using your default guess function.
+
+*Q: It's taking too long!*
+
+*A:* The example implementation is designed to give you a tour of the
+things that DSPy can do.  You do not need to use all of it.  It's
+quite likely that you can have a much simpler DSPy program that works
+just as well.  Rather than using the provided template as a starting
+point, you can "work up" to something more complicated by: 
+1. doing more pass through and less fewer modules (this also helps with
+caching)
+2. Removing steps (e.g., directly use the question for the RAG step
+rather than formulating a new query)
+3. Use different optimizers in DSPy.
