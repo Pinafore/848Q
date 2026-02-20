@@ -43,24 +43,22 @@ where you can use your previous homework implementation of:
 
 Here are functions you will need to implement:
 
-* **Reward function** (`_rl_reward`)
-  - Must reward:
-    - correct buzz (scaled by “how early” you buzz)
-    - penalize wrong buzz
-    - small penalty for waiting (to prevent infinite waiting)
+* **Reward function** (`_rl_reward`) Must reward:
+  - correct buzz (scaled by “how early” you buzz)
+  - penalize wrong buzz
+  - small penalty for waiting (to prevent infinite waiting)
   - The template includes an `expected_win_probability(...)` helper.
 
 * **Rollout stop condition** (`_rl_rollout`)
   - When the policy chooses **BUZZ**, the episode should **end immediately** (stop rolling out additional steps).
 
-* **REINFORCE loss** (`_rl_loss`)
-  - Implement the policy gradient objective using:
-    - log-probabilities of chosen actions
-    - advantage \(A = R - b\)
-    - optional entropy bonus (already scaffolded)
+* **REINFORCE loss** (`_rl_loss`) Implement the policy gradient objective using:
+  - log-probabilities of chosen actions
+  - advantage $$A$$
+  - entropy reg 
 
 * **Advantage computation** (`train`)
-  - Compute \(A = R - b\) (baseline is scaffolded).
+  - Compute $$A = R - b$$
 
 After you done implementation, you can test your training code
 ```bash
