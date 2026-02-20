@@ -25,8 +25,6 @@ import os
 from nltk.tokenize import sent_tokenize
 from guesser import print_guess, Guesser
 
-from sklearn.feature_extraction.text import TfidfVectorizer
-
 kTFIDF_TEST_QUESTIONS = {"This capital of England": ['Maine', 'Boston'],
                         "The author of Pride and Prejudice": ['Jane_Austen', 'Jane_Austen'],
                         "The composer of the Magic Flute": ['Wolfgang_Amadeus_Mozart', 'Wolfgang_Amadeus_Mozart'],
@@ -61,12 +59,11 @@ class TfidfGuesser(Guesser):
         """
 
         # You'll need add the vectorizer here and replace this fake vectorizer
-        self.tfidf_vectorizer = TfidfVectorizer(min_df=min_df, max_df=max_df)
-        self.tfidf = None
+        self.tfidf_vectorizer = DummyVectorizer()
+        self.tfidf = None 
         self.questions = None
         self.answers = None
         self.filename = filename
-
 
     def train(self, training_data, answer_field='page', split_by_sentence=True,
                     min_length=-1, max_length=-1, remove_missing_pages=True):
@@ -118,8 +115,7 @@ class TfidfGuesser(Guesser):
         for i in range(max_n_guesses):
             # The line below is wrong but lets the code run for the homework.
             # Remove it or fix it!
-            #idx = i
-            idx = indices[i] # is this correct?
+            idx = i
             guess =  {"question": self.questions[idx], "guess": self.answers[idx],
                       "confidence": cos[idx]}
             guesses.append(guess)
