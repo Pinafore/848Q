@@ -49,8 +49,6 @@ def initialize_base_model(helper_function=AutoModelForSequenceClassification,
     model = helper_function.from_pretrained(model_name, num_labels=2)
 
     # Freeze the model parameters
-    for param in model.parameters():
-        param.requires_grad = False
 
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     return model, tokenizer
@@ -62,8 +60,8 @@ class LoRALayer(torch.nn.Module):
         """
         super().__init__()
 
-        self.A = torch.nn.Parameter(torch.empty(in_dim, rank))
-        self.B = torch.nn.Parameter(torch.empty(rank, out_dim))
+        self.A = None
+        self.B = None
         self.alpha = 0
 
         self.in_dim = in_dim
@@ -71,13 +69,6 @@ class LoRALayer(torch.nn.Module):
 
         # Complete the initialization of the two weight matrices
         self.alpha = alpha
-        self.rank = rank 
-
-        self.scaling = alpha / rank
-        
-        # init a normally, b as zeros
-        torch.nn.init.normal_(self.A, mean=0.0, std=0.02)
-        torch.nn.init.zeros_(self.B)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         """
@@ -93,9 +84,7 @@ class LoRALayer(torch.nn.Module):
             output_dimension = torch.Size((x.shape[0], self.out_dim))
 
         # Compute the low-rank delta
-        lora_delta = x @ self.A @ self.B
 
-        delta = self.alpha * lora_delta
         return delta
 
 
@@ -109,10 +98,6 @@ class LinearLoRA(torch.nn.Module):
         self.linear = linear
 
         # Initialize the LoRA layer
-        in_dim = linear.in_features
-        out_dim = linear.out_features
-        self.lora_lyr = LoRALayer(in_dim, out_dim, rank, alpha)
-
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         """
@@ -121,8 +106,6 @@ class LinearLoRA(torch.nn.Module):
         result = self.linear(x)
 
         # Add the LoRA delta
-        lora_delta = self.lora_lyr(x)
-        result = result + lora_delta
         return result
 
 # TODO(jbg): Get rid of the hardcoded modules so that it generalizes to other models
@@ -137,18 +120,7 @@ def add_lora(model: torch.nn.Module, rank: int, alpha: float,
         alpha: The scaling factor for the LoRA matrices.
         modules_to_adapt: The key of the dictionary is the model component to adapt (e.g., "attention" or "ffn"), and the values are specific linear layers in that component to adapt.  Anything in this dictionary will be adapted, but anything else will remain frozen.
     """
-    # partial obj
-    lora_partial = partial(LinearLoRA, rank=rank, alpha=alpha)
     
-    for layer in model.layer:
-        for component_name, module_names in modules_to_adapt.items():
-            component = getattr(layer, component_name)
-            if component:
-                for name in module_names:
-                    child = getattr(component, name, None)
-                    # replace w lora
-                    if isinstance(child, torch.nn.Linear):
-                        setattr(component, name, lora_partial(child))   #setattr(parent, layer_name, lora_partial(module))
 
     return model
                 
@@ -163,7 +135,10 @@ class LoRABertBuzzer(Buzzer):
         """
         Initialize the model and add LoRA layers.
         """
-
+		
+		self.model_name = model_name 
+        self.rank = rank 
+        self.alpha = alpha
         self.model, self.tokenizer = initialize_base_model(model_name=model_name)
         add_lora(self.model.distilbert.transformer, rank, alpha)
 
