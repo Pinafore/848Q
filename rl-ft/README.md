@@ -90,7 +90,7 @@ python3 eval.py \
 
 ## Good Enough 
 
-A good enough submission is simple, just have `Expected Win` >= x on dev, and `Expected Win` >= x on eval. You can tinker our reward when the model buzzes correctly, play with penalties, or train with more epochs, anything that you can to improve the metric!
+A good enough submission is simple, just have `Expected Win` >= 0.075 on eval (you can try when your `Expected Win` >= 0.065 on dev when training). You can tinker our reward when the model buzzes correctly, play with penalties, or train with more epochs, anything that you can to improve the metric!
 
 ## What To Submit (ONLY these)
 
