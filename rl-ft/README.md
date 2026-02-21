@@ -1,5 +1,3 @@
-# HW: RL Fine-Tuning a LoRA-BERT Buzzer (REINFORCE)
-
 ## Big Picture
 
 In the **prompt fine-tuning homework**, you did **supervised fine-tuning (SFT)** and implemented a **LoRA-adapted DistilBERT buzzer** (“LoRABERT”) that learns to **buzz vs. wait** from labeled training data.
@@ -76,11 +74,23 @@ python3 rl_lorabert_buzzer.py \
   --limit=100
 ```
 
-Once it runs end-to-end perfectly, remove `--limit` (or increase it)
+Once it runs end-to-end perfectly, remove `--limit` (or increase it). 
+
+You can evaluate your RL model by on dev dataset by:
+```bash
+python3 eval.py \
+  --evaluate buzzer
+  --questions ../data/qanta.buzzdev.json.gz \
+  --secondary_questions=../data/qanta.buzzdev.json.gz \
+  --buzzer_guessers=Tfidf \
+  --buzzer_type=rl_lorabert \
+  --num_guesses 1
+  --limit=100
+```
 
 ## Good Enough 
 
-A good enough submission is simple, just have `Expected Win` >= x on training, and `Expected Win` >= x on eval. You can tinker our reward when the model buzzes correctly, play with penalties, or train with more epochs, anything that you can to improve the metric!
+A good enough submission is simple, just have `Expected Win` >= x on dev, and `Expected Win` >= x on eval. You can tinker our reward when the model buzzes correctly, play with penalties, or train with more epochs, anything that you can to improve the metric!
 
 ## What To Submit (ONLY these)
 
@@ -97,7 +107,7 @@ These are the extra-credit items explicitly mentioned in the code. You can earn 
 
 * rank top 10 in the leaderboard by EW!
 
-* Additional reward signals 
+* Additional reward signals
 
 ## FAQ
 
