@@ -19,6 +19,8 @@ from lorabert_buzzer import LoRABertBuzzer
 class Step:
     text: str
     label: int              # 1 if guess correct; 0 otherwise
+    guess: str
+    answer: str
     qid: int
     run_length: int
     q_max_length: int
@@ -101,8 +103,8 @@ class LoRALayer(torch.nn.Module):
         """
         super().__init__()
 
-        self.A = torch.nn.Parameter(torch.empty(in_dim, rank))
-        self.B = torch.nn.Parameter(torch.empty(rank, out_dim))
+        self.A = None
+        self.B = None
         self.alpha = 0
 
         self.in_dim = in_dim
@@ -110,13 +112,6 @@ class LoRALayer(torch.nn.Module):
 
         # Complete the initialization of the two weight matrices
         self.alpha = alpha
-        self.rank = rank 
-
-        self.scaling = alpha / rank
-        
-        # init a normally, b as zeros
-        torch.nn.init.normal_(self.A, mean=0.0, std=0.02)
-        torch.nn.init.zeros_(self.B)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         """
@@ -132,9 +127,7 @@ class LoRALayer(torch.nn.Module):
             output_dimension = torch.Size((x.shape[0], self.out_dim))
 
         # Compute the low-rank delta
-        lora_delta = x @ self.A @ self.B
 
-        delta = self.alpha * lora_delta
         return delta
 
 
@@ -148,9 +141,6 @@ class LinearLoRA(torch.nn.Module):
         self.linear = linear
 
         # Initialize the LoRA layer
-        in_dim = linear.in_features
-        out_dim = linear.out_features
-        self.lora_lyr = LoRALayer(in_dim, out_dim, rank, alpha)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         """
@@ -159,11 +149,9 @@ class LinearLoRA(torch.nn.Module):
         result = self.linear(x)
 
         # Add the LoRA delta
-        lora_delta = self.lora_lyr(x)
-        result = result + lora_delta
         return result
 
-
+# TODO(jbg): Get rid of the hardcoded modules so that it generalizes to other models
 def add_lora(model: torch.nn.Module, rank: int, alpha: float, 
              modules_to_adapt: Dict[str, List[str]] = {"attention": ["q_lin", "k_lin", "v_lin", "out_lin"], "ffn": ["lin1", "lin2"]}):
     """
@@ -175,18 +163,7 @@ def add_lora(model: torch.nn.Module, rank: int, alpha: float,
         alpha: The scaling factor for the LoRA matrices.
         modules_to_adapt: The key of the dictionary is the model component to adapt (e.g., "attention" or "ffn"), and the values are specific linear layers in that component to adapt.  Anything in this dictionary will be adapted, but anything else will remain frozen.
     """
-    # partial obj
-    lora_partial = partial(LinearLoRA, rank=rank, alpha=alpha)
     
-    for layer in model.layer:
-        for component_name, module_names in modules_to_adapt.items():
-            component = getattr(layer, component_name)
-            if component:
-                for name in module_names:
-                    child = getattr(component, name, None)
-                    # replace w lora
-                    if isinstance(child, torch.nn.Linear):
-                        setattr(component, name, lora_partial(child))   #setattr(parent, layer_name, lora_partial(module))
 
     return model
 
@@ -255,7 +232,7 @@ class LoRABertRLBuzzer(LoRABertBuzzer):
                     label = 1 if rough_compare(guess["guess"], answer) else 0
                     # Text format matches original LoRABertBuzzer
                     text = "%0.2f [SEP] %s [SEP] %s" % (guess["confidence"], guess["guess"], run)
-                    steps.append(Step(text=text, label=label, qid=qid, run_length=run_len, q_max_length=q_max))
+                    steps.append(Step(text=text, label=label, guess=guess["guess"], answer=answer, qid=qid, run_length=run_len, q_max_length=q_max))
 
         # Sort by (qid, run_length) to create time-order per question
         steps.sort(key=lambda s: (s.qid, s.run_length))
@@ -275,6 +252,43 @@ class LoRABertRLBuzzer(LoRABertBuzzer):
         episodes = [grouped[qid] for qid in sorted(grouped.keys())]
         return episodes
 
+    def predict(self, questions):
+        if self._pipeline is None:
+            from transformers import pipeline
+
+            # TODO: set this up to use GPU based on device
+            self._classifier = pipeline("text-classification", model=self.model, tokenizer=self.tokenizer)
+
+            # TODO: Use explainability to generate some features
+            self._classifier.coef_ = [[]]
+
+        episodes = self._rl_episodes(questions)
+
+        predictions = []
+        labels = []
+        inputs = {}
+
+        assert len(episodes) == len(questions), "Expected one episode per one question, but got %i episodes and %i questions" % (len(episodes), len(questions))
+
+        for traj in episodes:
+            for step in traj:
+                a, _,_ = self._rl_sample(self._rl_encode(step.text, device=self._rl_device()))
+                predictions.append(a.item())
+                inputs[len(inputs)] = {
+                    "text": step.text,
+                    "guess": step.guess,
+                    "answer": step.answer,
+                    "id": step.qid
+                }
+                labels.append(step.label)
+
+        for question_index in range(len(questions)):
+            questions[question_index]["run"] = inputs[question_index]["text"]
+            questions[question_index]["guess"] = inputs[question_index]["guess"]
+            questions[question_index]["answer"] = inputs[question_index]["answer"]
+            questions[question_index]["id"] = inputs[question_index]["id"]
+            
+        return predictions, [], [], [pred==label for pred, label in zip(predictions, labels)], questions
 
     # ---------------------------
     # RL training: 
@@ -388,16 +402,25 @@ class LoRABertRLBuzzer(LoRABertBuzzer):
         torch.nn.utils.clip_grad_norm_(params, 1.0)
         opt.step()
 
-    def _rl_eval_expected_wins(self, episodes, device) -> float:
+    def _rl_eval(self, episodes, device) -> float:
         ew = 0.0
+        outcomes = {"best": 0, "waiting": 0, "aggressive": 0, "timid": 0}
         for traj in episodes:
-            for step in traj:
-                a, logp, ent = self._rl_sample(self._rl_encode(step.text, device))
-                if a == 0:
-                    ew = 0.0
-                pct = float(step.run_length) / float(max(1, step.q_max_length))
-                ew += expected_win_probability(pct)
-        return ew / len(episodes)
+            step = traj[-1]
+            a, logp, ent = self._rl_sample(self._rl_encode(step.text, device))
+            if step.label ==1:
+                if a == 1:
+                    pct = float(step.run_length) / float(max(1, step.q_max_length))
+                    ew += expected_win_probability(pct)
+                    outcomes["best"] += 1
+                if a==0:
+                    outcomes["timid"] += 1
+            elif step.label == 0 and a == 1:
+                outcomes["aggressive"] += 1
+            elif a == 0:
+                outcomes["waiting"] += 1
+
+        return outcomes, ew / len(episodes), sum(outcomes.values())
 
 
     def train(self, finetune_questions, dev_questions):
@@ -438,10 +461,14 @@ class LoRABertRLBuzzer(LoRABertBuzzer):
             avg_steps = total_steps / max(1, len(episodes))
             logging.info(f"[RL] Epoch {ep}/{cfg['epochs']}: avg_return={avg_R:.4f}, avg_steps={avg_steps:.2f}")
             
-            ew = self._rl_eval_expected_wins(dev_episodes, device)
+            outcomes, ew, total = self._rl_eval(dev_episodes, device)
             logging.info(f"[RL] Epoch {ep}: dev expected_wins={ew:.4f}")
-
-
+            logging.info("Questions Right: %i (out of %i) Accuracy: %0.2f  Buzz ratio: %0.2f Expected Wins: %f" %
+              (outcomes["best"], # Right
+               total,            # Total
+               (outcomes["best"] + outcomes["waiting"]) / total if total > 0 else 0, # Accuracy
+               (outcomes["best"] - outcomes["aggressive"] * 0.5) / total if total > 0 else 0, # Ratio
+               ew))
     def save(self):
         # Save only trainable params (LoRA)
         model_state_dict = {n: p.detach().cpu() for n, p in self.model.named_parameters() if p.requires_grad}
@@ -492,7 +519,7 @@ if __name__ == "__main__":
     if finetune_questions and getattr(flags, "limit", -1) > 0:
         finetune_questions = finetune_questions[: flags.limit]
     if dev_questions and getattr(flags, "limit", -1) > 0:
-        dev_questions = dev_questions[: 100]
+        dev_questions = dev_questions[: flags.limit]
 
     buzzer.train(finetune_questions, dev_questions)
 
