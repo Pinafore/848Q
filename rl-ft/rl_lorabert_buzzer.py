@@ -250,6 +250,7 @@ class LoRABertRLBuzzer(LoRABertBuzzer):
             grouped[s.qid].append(s)
         # Ensure each question's steps are in time order
         episodes = [grouped[qid] for qid in sorted(grouped.keys())]
+        random.shuffle(episodes) 
         return episodes
 
     def predict(self, questions):
@@ -309,7 +310,7 @@ class LoRABertRLBuzzer(LoRABertBuzzer):
         }
 
     def _rl_seed(self, seed: int) -> None:
-        random.seed(seed)
+        .seed(seed)
         torch.manual_seed(seed)
 
     def _rl_device(self) -> torch.device:
@@ -440,7 +441,6 @@ class LoRABertRLBuzzer(LoRABertBuzzer):
 
         baseline = 0.0
         for ep in range(1, cfg["epochs"] + 1):
-            random.shuffle(episodes)
             total_R, total_steps = 0.0, 0
 
             for traj in episodes:
