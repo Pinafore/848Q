@@ -441,6 +441,7 @@ class LoRABertRLBuzzer(LoRABertBuzzer):
         baseline = 0.0
         for ep in range(1, cfg["epochs"] + 1):
             total_R, total_steps = 0.0, 0
+            random.shuffle(episodes)
 
             for traj in episodes:
                 # rollout one episode for this question (runs = steps)
