@@ -92,14 +92,15 @@ python3 eval.py \
 
 A good enough submission is simple, just have `Expected Win` >= 0.075 on eval (you can try when your `Expected Win` >= 0.065 on dev when training). You can tinker our reward when the model buzzes correctly, play with penalties, or train with more epochs, anything that you can to improve the metric!
 
-## What To Submit (ONLY these)
+## What To Submit 
 
 Submit following files on Gradescope:
 
 1. `rl_lorabert_buzzer.py` ; don't forget to set your best params in this file!
 2. `tfidf_guesser.py`
-3. `lorabert_rl.model` 
-4. Your `TfidfGuesser.answers.pkl`, `TfidfGuesser.questions.pkl`, `TfidfGuesser.tfidf.pkl` and `TfidfGuesser.vectorizer.pkl` (a tfidf guesser)
+3. `parameters.py` ; since we may set params differently than our defaults
+4. `lorabert_rl.model` 
+5. Your `TfidfGuesser.answers.pkl`, `TfidfGuesser.questions.pkl`, `TfidfGuesser.tfidf.pkl` and `TfidfGuesser.vectorizer.pkl` (a tfidf guesser)
 
 ## Extra Credit
 
