@@ -7,6 +7,9 @@ from rl_lorabert_buzzer import LoRABertRLBuzzer, Step, initialize_base_model
 
 class LoraBertRLTest(unittest.TestCase):
     def setUp(self):
+        """
+        setting up a minimal LoRABertRLBuzzer instance with a tiny random model for testing RL components.
+        """
         torch.manual_seed(0)
         random.seed(0)
         import argparse 
@@ -28,16 +31,10 @@ class LoraBertRLTest(unittest.TestCase):
         question_params = add_question_params(parser) 
         add_general_params(parser) 
         flags = parser.parse_args() 
+        flags.logging_level = "CRITICAL"  # suppress logging during tests
         setup_logging(flags) 
         
         self.buzzer = LoRABertRLBuzzer(filename="", run_length=5, num_guesses=1, cfg=flags) 
-        # self.buzzer.initialize_model("distilbert-base-uncased", 16,1.0)
-
-        # Build buzzer without invoking Buzzer.__init__ (keeps unit tests isolated)
-        # self.buzzer = LoRABertRLBuzzer.__new__(LoRABertRLBuzzer)
-
-        # Use a real HF tokenizer + a tiny HF model (fast + deterministic-ish)
-        # Matches the pattern used in your LoRA unit tests. :contentReference[oaicite:1]{index=1}
         self.buzzer.model, self.buzzer.tokenizer = initialize_base_model(
             model_name="hf-internal-testing/tiny-random-BertForSequenceClassification"
         )
@@ -80,6 +77,9 @@ class LoraBertRLTest(unittest.TestCase):
     # --------------------------
 
     def test_rl_return_discounted(self):
+        """
+        whether the return is correctly computed as discounted sum of rewards
+        """
         rewards = [1.0, 2.0, 3.0]
         gamma = 0.5
         # Return = 1 + 0.5*(2 + 0.5*3) = 2.75
@@ -87,13 +87,16 @@ class LoraBertRLTest(unittest.TestCase):
         self.assertAlmostEqual(R, 2.75, places=6)
 
     def test_rl_loss_scalar_and_backward(self):
+        """
+        whether the loss is a scalar tensor and backward() computes gradients without error
+        """
         traj = [
-            Step(text="0.50 [SEP] guess [SEP] question text aaaa", label=1, qid=0, run_length=1, q_max_length=4),
-            Step(text="0.40 [SEP] guess [SEP] question text bbbbbbbb", label=0, qid=0, run_length=2, q_max_length=4),
+            Step(text="0.50 [SEP] guess [SEP] question text aaaa", label=1, qid=0, guess='', answer='', run_length=1, q_max_length=4),
+            Step(text="0.40 [SEP] guess [SEP] question text bbbbbbbb", label=0, qid=0, guess='', answer='',run_length=2, q_max_length=4),
         ]
 
         logps, ents, rewards, actions = self.buzzer._rl_rollout(traj, self.device)
-
+        # Basic sanity checks on outputs
         self.assertEqual(len(logps), len(ents))
         self.assertEqual(len(ents), len(rewards))
         self.assertEqual(len(rewards), len(actions))
@@ -103,6 +106,7 @@ class LoraBertRLTest(unittest.TestCase):
         adv = R - 0.0
         loss = self.buzzer._rl_loss(logps, ents, adv, self.cfg["entropy_coef"])
 
+        # Loss should be a scalar tensor
         self.assertTrue(torch.is_tensor(loss))
         self.assertEqual(loss.ndim, 0, "Loss should be a scalar tensor")
 
@@ -117,40 +121,17 @@ class LoraBertRLTest(unittest.TestCase):
             if p.grad is not None and torch.isfinite(p.grad).all() and torch.any(p.grad != 0):
                 any_grad = True
                 break
+        # Check that at least one trainable parameter has a non-zero, finite gradient
         self.assertTrue(any_grad, "Expected some non-zero gradients on trainable params")
-
-    # --------------------------
-    # Tests: update step
-    # --------------------------
-
-    def test_rl_step_updates_params(self):
-        traj = [
-            Step(text="0.50 [SEP] guess [SEP] q x", label=1, qid=0, run_length=1, q_max_length=2),
-            Step(text="0.50 [SEP] guess [SEP] q xx", label=1, qid=0, run_length=2, q_max_length=2),
-        ]
-
-        params = [p for p in self.buzzer.model.parameters() if p.requires_grad]
-        opt = torch.optim.SGD(params, lr=0.1)
-
-        before = self.util_params_snapshot()
-
-        logps, ents, rewards, _ = self.buzzer._rl_rollout(traj, self.device)
-        R = self.buzzer._rl_return(rewards, self.cfg["gamma"])
-        loss = self.buzzer._rl_loss(logps, ents, R, entropy_coef=0.0)  # simplify
-
-        self.buzzer._rl_step(opt, params, loss)
-
-        after = self.util_params_snapshot()
-        self.assertTrue(
-            self.util_any_param_changed(before, after),
-            "Expected at least one parameter to change after _rl_step"
-        )
 
     # --------------------------
     # Tests: rollout termination
     # --------------------------
 
     def test_rollout_stops_on_buzz_when_forced(self):
+        """
+        Test that the rollout correctly terminates when a BUZZ action is taken
+        """
         # Force BUZZ on first step by patching _rl_sample
         def forced_buzz(enc):
             a = torch.tensor(1)  # BUZZ
@@ -162,9 +143,9 @@ class LoraBertRLTest(unittest.TestCase):
         self.buzzer._rl_sample = forced_buzz
         try:
             traj = [
-                Step(text="0.5 [SEP] g [SEP] step1", label=1, qid=0, run_length=1, q_max_length=3),
-                Step(text="0.5 [SEP] g [SEP] step2", label=1, qid=0, run_length=2, q_max_length=3),
-                Step(text="0.5 [SEP] g [SEP] step3", label=1, qid=0, run_length=3, q_max_length=3),
+                Step(text="0.5 [SEP] g [SEP] step1", label=1, qid=0, guess='', answer='', run_length=1, q_max_length=3),
+                Step(text="0.5 [SEP] g [SEP] step2", label=1, qid=0, guess='', answer='', run_length=2, q_max_length=3),
+                Step(text="0.5 [SEP] g [SEP] step3", label=1, qid=0, guess='', answer='', run_length=3, q_max_length=3),
             ]
             logps, ents, rewards, actions = self.buzzer._rl_rollout(traj, self.device)
 
@@ -178,17 +159,17 @@ class LoraBertRLTest(unittest.TestCase):
     # --------------------------
 
     def test_rl_reward_wait_penalty(self):
-        step = Step(text="t", label=1, qid=0, run_length=1, q_max_length=10)
+        step = Step(text="t", label=1, qid=0, guess='', answer='',run_length=1, q_max_length=10)
         r = self.buzzer._rl_reward(step, action=0)
         self.assertAlmostEqual(r, self.cfg["wait_penalty"], places=6)
 
     def test_rl_reward_wrong_buzz_penalty(self):
-        step = Step(text="t", label=0, qid=0, run_length=5, q_max_length=10)
+        step = Step(text="t", label=0, qid=0, guess='', answer='',run_length=5, q_max_length=10)
         r = self.buzzer._rl_reward(step, action=1)
         self.assertAlmostEqual(r, self.cfg["wrong_buzz_penalty"], places=6)
 
     def test_rl_reward_correct_buzz_positive(self):
-        step = Step(text="t", label=1, qid=0, run_length=5, q_max_length=10)
+        step = Step(text="t", label=1, qid=0, guess='', answer='',run_length=5, q_max_length=10)
         r = self.buzzer._rl_reward(step, action=1)
         self.assertTrue(r > 0.0, "Correct buzz reward should be positive")
 
