@@ -405,17 +405,20 @@ class LoRABertRLBuzzer(LoRABertBuzzer):
     def _rl_eval(self, episodes, device) -> float:
         ew = 0.0
         outcomes = {"best": 0, "waiting": 0, "aggressive": 0, "timid": 0}
+        neg_on_question = defaultdict(bool)
         for traj in episodes:
             step = traj[-1]
             a, logp, ent = self._rl_sample(self._rl_encode(step.text, device))
             if step.label ==1:
                 if a == 1:
-                    pct = float(step.run_length) / float(max(1, step.q_max_length))
-                    ew += expected_win_probability(pct)
+                    if not neg_on_question[step.qid]:
+                        pct = float(step.run_length) / float(max(1, step.q_max_length))
+                        ew += expected_win_probability(pct)
                     outcomes["best"] += 1
                 if a==0:
                     outcomes["timid"] += 1
             elif step.label == 0 and a == 1:
+                neg_on_question[step.qid] = True
                 outcomes["aggressive"] += 1
             elif a == 0:
                 outcomes["waiting"] += 1
