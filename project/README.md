@@ -41,8 +41,8 @@ The project proposal is a one page PDF document that should describe:
 Submit this (and all other deliverables) to Gradescope using the team
 functionality.
 
-Intro and Related Work
-======================
+Literature Review / Related Work
+=================================
 
 This first deliverable should be written like the first sections of a
 conference paper.  It should:
@@ -57,10 +57,24 @@ research.
 This obviously has a lot over overlap with the proposal, but the ideas
 should be clearer, this should be more clearly written, it should not
 assume too much information that we've covered in the course, and it
-should include appropriate citations for related work.
+should include appropriate citations for related work (rendered in BibTeX).
+
+The number of citations that you'll need is highly variable.  You should cover:
+* The publications that establish the problem you're exploring
+* Methods you'll use
+* Methods you'll compare against
+* Citations outside of your field that show how important what you're doing is
 
 If your ideas have changed considerably since the proposal, obviously
 rewrite that information.
+
+
+Abstract / Intro
+======================
+
+Didn't we already write an abstract / intro before?  Yes, but now you've had some time to think about it and respond to the comments we provided.  This deliverable is just focused on making the abstract and intro good and responding to the first round of feedback.  
+
+Importantly, you are now required to have a *teaser figure* that explains what your paper is doing.
 
 Baselines
 =========================
